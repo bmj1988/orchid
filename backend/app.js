@@ -5,7 +5,7 @@ const cors = require('cors');
 const csurf = require('csurf');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
-const { environment } = process.env.NODE_ENV;
+const environment = process.env.NODE_ENV;
 const isProduction = environment === 'production';
 const routes = require('./routes');
 
@@ -79,5 +79,7 @@ app.use((err, _req, res, _next) => {
         stack: isProduction ? null : err.stack
     });
 });
+
+app.listen(process.env.PORT, () => console.log(`Server: ONLINE port: ${process.env.PORT} `))
 
 module.exports = app;
