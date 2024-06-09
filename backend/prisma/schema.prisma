@@ -11,11 +11,12 @@ datasource db {
 }
 
 model User {
-  id          Int     @id @default(autoincrement())
-  email       String  @unique
-  name        String?
-  preferences Int
-  walls       Wall[]
+  id             Int     @id @default(autoincrement())
+  email          String  @unique
+  name           String?
+  hashedPassword String
+  preferences    Int?
+  walls          Wall[]
 }
 
 model Wall {

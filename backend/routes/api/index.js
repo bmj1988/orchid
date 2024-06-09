@@ -8,16 +8,16 @@ const usersRouter = require('./users.js');
 //You can use requireAuth as middleware for routes that require sign in
 //You can use setTokenCookie as a func to set cookie for user
 
-// router.use(restoreUser);
+router.use(restoreUser);
 
-// router.use('/session', sessionRouter);
-// router.use('/users', usersRouter);
+router.use('/session', sessionRouter);
+router.use('/users', usersRouter);
 
 
-// // Restore user
-// router.get('/restore-user', (req, res) => {
-//     return res.json(req.user);
-// });
+// Restore user
+router.get('/restore-user', (req, res) => {
+    return res.json(req.user);
+});
 
 
 
