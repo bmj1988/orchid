@@ -7,11 +7,11 @@ const prisma = new PrismaClient();
 
 // Log in
 router.post('/', async (req, res, next) => {
-    const { credential, password } = req.body;
-    console.log(credential, password, "************")
+    const { email, password } = req.body;
+    console.log(email, password, "************")
     const user = await prisma.user.findUnique({
         where: {
-            email: credential
+            email: email
         }
     });
 
@@ -19,7 +19,7 @@ router.post('/', async (req, res, next) => {
         const err = new Error('Login failed');
         err.status = 401;
         err.title = 'Login failed';
-        err.errors = { credential: 'The provided credentials were invalid.' };
+        err.errors = { email: 'The provided credentials were invalid.' };
         return next(err);
     }
 

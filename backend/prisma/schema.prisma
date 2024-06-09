@@ -33,5 +33,6 @@ model Quote {
   wall      Wall     @relation(fields: [wallId], references: [id])
   wallId    Int
   content   String
+  author    String
   createdAt DateTime @default(now())
 }
