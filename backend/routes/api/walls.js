@@ -1,12 +1,13 @@
 const express = require('express')
-const { PrismaClient } = require('@prisma/client')
+const { requireAuth } = require('../../utils/auth')
+const prisma = require('./prisma')
 
 const router = express.Router()
-const prisma = new PrismaClient()
+
 
 // GET ALL WALLS - MAYBE PAGINATE ? CAN CLICK OVER TO NEXT PAGE
 
-router.get('/', async (req, res, next) => {
+router.get('/', requireAuth, async (req, res, next) => {
     const user = req.user
     const walls = await prisma.wall.findMany({
         where: {
@@ -19,7 +20,7 @@ router.get('/', async (req, res, next) => {
         }
     })
     try {
-        res.json(walls)
+        return res.json(walls)
     }
     catch (e) {
         next(e)
@@ -28,7 +29,7 @@ router.get('/', async (req, res, next) => {
 
 // GET DETAILS OF SPECIFIC WALLS
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', requireAuth, async (req, res) => {
     const wall = await prisma.wall.findFirst({
         where: {
             id: parseInt(req.params.id)
@@ -49,12 +50,12 @@ router.get('/:id', async (req, res) => {
         }
     })
 
-    res.json(wall)
+    return res.json(wall)
 })
 
 // CREATE NEW WALL
 
-router.post('/new', async (req, res, next) => {
+router.post('/new', requireAuth, async (req, res, next) => {
     const { name, quote } = req.body
     const userId = parseInt(req.user.id)
     let newWall;
@@ -77,49 +78,53 @@ router.post('/new', async (req, res, next) => {
         }
     }
     try {
-        const wall = await prisma.wall.create({data: newWall})
-        res.json(wall)
+        const wall = await prisma.wall.create({ data: newWall })
+        return res.json(wall)
     }
     catch (e) {
         console.error(e)
-        res.json({ Error: e })
+        return res.json({ Error: e })
     }
 
 })
 
 // UPDATE WALL
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', requireAuth, async (req, res, next) => {
     const id = parseInt(req.params.id)
     const data = req.body
     try {
         const updateWall = await prisma.wall.update({
             where: {
-                id
+                id,
+                userId: req.user.id
             }, data
 
         })
-        res.status(201).json(updateWall)
+        return res.status(201).json(updateWall)
+
     }
     catch (e) {
         console.error(e)
-        next(e)
+        return res.status(404).json({ Error: "Record not found" })
     }
 })
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', requireAuth, async (req, res, next) => {
     const id = parseInt(req.params.id)
     try {
-        const deletedWall = await prisma.wall.delete({
+        await prisma.wall.delete({
             where: {
-                id
+                id,
+                userId: req.user.id
             }
         })
-        res.json({Status: "Successfully Deleted"})
+        return res.json({ Status: "Successfully Deleted" });
     }
+
     catch (e) {
         console.error(e)
-        next(e)
+        return res.status(404).json({ Error: "Record not found" })
     }
 })
 

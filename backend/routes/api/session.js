@@ -2,8 +2,8 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
 const router = express.Router();
-const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient();
+const prisma = require('./prisma')
+
 
 // Log in
 router.post('/', async (req, res, next) => {

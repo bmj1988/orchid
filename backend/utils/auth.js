@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { jwtConfig } = require('../config');
-const { PrismaClient } = require('@prisma/client');
+const prisma = require('../routes/api/prisma')
+
 
 const { secret } = jwtConfig;
 
@@ -33,7 +34,6 @@ const setTokenCookie = (res, user) => {
 
 const restoreUser = (req, res, next) => {
     // token parsed from cookies
-    const prisma = new PrismaClient();
     const { token } = req.cookies;
     req.user = null;
 
@@ -71,9 +71,9 @@ const requireAuth = function (req, _res, next) {
 }
 
 const validateLogin = function (req, res, next) {
-    const { credential, password } = req.body
+    const { email, password } = req.body
     errors = {}
-    if (credential.length < 1) {
+    if (email.length < 1) {
         errors['emailLength'] = 'Enter a valid email'
     }
     if (password.length < 1) {
