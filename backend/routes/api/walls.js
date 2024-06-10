@@ -12,10 +12,6 @@ router.get('/', async (req, res, next) => {
         where: {
             userId: user.id
         },
-        select: {
-            name: true,
-            access: true,
-        },
         include: {
             _count: {
                 select: { quotes: true },
@@ -35,7 +31,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res) => {
     const wall = await prisma.wall.findFirst({
         where: {
-            id: req.params.id
+            id: parseInt(req.params.id)
         },
         include: {
             quotes: {
@@ -60,7 +56,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/new', async (req, res, next) => {
     const { name, quote } = req.body
-    const userId = req.user.id
+    const userId = parseInt(req.user.id)
     let newWall;
     if (!quote) {
         newWall = {
@@ -81,7 +77,7 @@ router.post('/new', async (req, res, next) => {
         }
     }
     try {
-        const wall = await prisma.wall.create(newWall)
+        const wall = await prisma.wall.create({data: newWall})
         res.json(wall)
     }
     catch (e) {
@@ -94,8 +90,8 @@ router.post('/new', async (req, res, next) => {
 // UPDATE WALL
 
 router.put('/:id', async (req, res, next) => {
-    const id = req.params.id
-    const data = req.body.wall
+    const id = parseInt(req.params.id)
+    const data = req.body
     try {
         const updateWall = await prisma.wall.update({
             where: {
@@ -112,16 +108,19 @@ router.put('/:id', async (req, res, next) => {
 })
 
 router.delete('/:id', async (req, res, next) => {
-    const id = req.params.id
+    const id = parseInt(req.params.id)
     try {
         const deletedWall = await prisma.wall.delete({
             where: {
                 id
             }
         })
+        res.json({Status: "Successfully Deleted"})
     }
     catch (e) {
         console.error(e)
         next(e)
     }
 })
+
+module.exports = router;
