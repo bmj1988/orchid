@@ -3,6 +3,23 @@ const { requireAuth } = require('../../utils/auth')
 const prisma = require('./prisma')
 const router = express.Router()
 
+// QUOTE FEED
+
+router.get('/feed', async (req, res, next) => {
+    try {
+        const feed = await prisma.quote.findMany({
+            orderBy: {
+                createdAt: 'asc'
+            }
+        })
+        res.json(feed)
+    }
+    catch (e) {
+        console.error(e)
+        res.status(404).json({ Error: "Records not found" })
+    }
+})
+
 // GET SINGLE QUOTE - Useful for Quote spotlight
 
 router.get('/:id', async (req, res, next) => {

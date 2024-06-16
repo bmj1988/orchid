@@ -16,6 +16,7 @@ model User {
   name           String?
   hashedPassword String
   preferences    Int?
+  img            String
   walls          Wall[]
 }
 

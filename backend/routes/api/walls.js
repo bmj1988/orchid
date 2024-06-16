@@ -46,6 +46,9 @@ router.get('/:id', requireAuth, async (req, res) => {
                     id: true,
                     name: true,
                 }
+            },
+            _count: {
+                select: { quotes: true },
             }
         }
     })
