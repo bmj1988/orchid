@@ -50,7 +50,28 @@ router.post('/', requireAuth, async (req, res, next) => {
                 }
             }
         })
-        return res.status(201).json({ Status: "Successfully added." })
+        const wall = await prisma.wall.findUnique({
+            where: { id: wallId },
+            include: {
+                quotes: {
+                    select: {
+                        content: true,
+                        author: true,
+                        id: true
+                    }
+                },
+                user: {
+                    select: {
+                        id: true,
+                        name: true,
+                    }
+                },
+                _count: {
+                    select: { quotes: true },
+                }
+            }
+        })
+        return res.json(wall)
     }
     catch (e) {
         console.log(e.message)

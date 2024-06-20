@@ -38,7 +38,8 @@ router.get('/:id', requireAuth, async (req, res) => {
             quotes: {
                 select: {
                     content: true,
-                    author: true
+                    author: true,
+                    id: true
                 }
             },
             user: {
