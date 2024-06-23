@@ -17,7 +17,6 @@ export default function WallScreen() {
 
   return (
     <View style={styles.titleContainer}>
-      <View style={styles.bar}></View>
       <Text style={styles.logo}>{'GALLERY'}</Text>
       <ScrollView contentContainerStyle={styles.wallContainer}>
         {walls.length > 0 && walls.map((wall) => {
@@ -38,7 +37,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
     overflow: "scroll",
-    backgroundColor: tulipColors.orchidEggshell
+    backgroundColor: tulipColors.orchidEggshell,
+    marginTop: StatusBar.currentHeight,
+    marginBottom: 35,
   },
   wallContainer: {
     gap: 8,
@@ -53,9 +54,6 @@ const styles = StyleSheet.create({
     fontSize: 60,
     marginBottom: 80,
     fontFamily: 'PlayfairDisplay'
-  },
-  bar: {
-    height: StatusBar.currentHeight,
   },
   icon: {
     fontSize: 100,

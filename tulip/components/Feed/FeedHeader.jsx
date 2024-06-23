@@ -19,7 +19,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingLeft: 10,
-        paddingRight: 10
+        paddingRight: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: tulipColors.tulipBlack,
     },
     logoText: {
         fontFamily: 'Allison',

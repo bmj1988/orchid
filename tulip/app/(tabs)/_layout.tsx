@@ -14,9 +14,10 @@ export default function TabLayout() {
         tabBarActiveTintColor: tulipColors.tulipBlack,
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: tulipColors.tulipWhite,
-          borderColor: tulipColors.tulipWhite,
-          elevation: 0
+          backgroundColor: 'transparent',
+          borderTopWidth: 0,
+          elevation: 0,
+          position: 'absolute',
         }
       }}>
       <Tabs.Screen

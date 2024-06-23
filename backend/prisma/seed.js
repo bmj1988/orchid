@@ -13,15 +13,17 @@ async function main() {
             walls: {
                 create: {
                     name: 'Demo Wall',
-                    quotes: {
-                        create: {
-                            content: "Man is free at the moment he wishes to be.",
-                            author: "Voltaire"
-
-                        }
-                    }
                 }
             }
+        }
+    })
+
+    await prisma.quote.create({
+        data: {
+            content: "Man is free at the moment he wishes to be.",
+            author: "Voltaire",
+            userId: 1,
+            wallId: 1
         }
     })
 
@@ -34,15 +36,18 @@ async function main() {
             hashedPassword: bcrypt.hashSync('password'),
             walls: {
                 create: {
-                    name: 'Inspiration',
-                    quotes: {
-                        create: {
-                            content: "Keep your face always toward the sunshine - and shadows will fall behind you.",
-                            author: "Walt Whitman"
-                        }
-                    }
+                    name: 'Inspiration'
                 }
             }
+        }
+    })
+
+    await prisma.quote.create({
+        data: {
+            content: "It is never too late to be what you might have been.",
+            author: "George Eliot",
+            userId: 2,
+            wallId: 2
         }
     })
 
@@ -55,15 +60,19 @@ async function main() {
             hashedPassword: bcrypt.hashSync('password'),
             walls: {
                 create: {
-                    name: 'Wisdom',
-                    quotes: {
-                        create: {
-                            content: "Affliction comes to us, not to make us sad but sober; not to make us sorry but wise.",
-                            author: "H.G. Wells"
-                        }
-                    }
+                    name: 'Wisdom'
                 }
             }
+        }
+    })
+
+
+    await prisma.quote.create({
+        data: {
+            content: "Perfection is not attainable, but if we chase perfection we can catch excellence",
+            author: "Vince Lombardi",
+            userId: 3,
+            wallId: 3
         }
     })
 

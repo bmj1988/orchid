@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: StatusBar.currentHeight,
     backgroundColor: tulipColors.tulipWhite,
+    marginBottom: 35,
     alignItems: 'center',
   },
   imageContainer: {

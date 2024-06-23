@@ -19,16 +19,21 @@ model User {
   preferences    Int?
   img            String?
   walls          Wall[]
-  Comment        Comment[]
-  Likes          Like[]
+  comments       Comment[]
+  likes          Like[]
+  quotes         Quote[]
+  followedBy     Follows[] @relation("followedBy")
+  following      Follows[] @relation("following")
+  Group          Group[]
 }
 
 model Wall {
   id     Int     @id @default(autoincrement())
   access String  @default("public")
   name   String
-  user   User[]
+  user   User    @relation(fields: [userId], references: [id])
   userId Int
+  group  Group?
   quotes Quote[]
 }
 
@@ -38,10 +43,12 @@ model Quote {
   wallId    Int
   content   String
   author    String
+  user      User      @relation(fields: [userId], references: [id])
+  userId    Int
   postedOn  DateTime  @default(now())
   updatedOn DateTime  @default(now())
   Comment   Comment[]
-  Likes     Like[]
+  likes     Like[]
 }
 
 model Comment {
@@ -62,4 +69,20 @@ model Like {
   user     User     @relation(fields: [userId], references: [id])
   userId   Int
   postedOn DateTime @default(now())
+}
+
+model Follows {
+  followedBy   User @relation("followedBy", fields: [followedById], references: [id])
+  followedById Int
+  following    User @relation("following", fields: [followingId], references: [id])
+  followingId  Int
+
+  @@id([followingId, followedById])
+}
+
+model Group {
+  id     Int    @id @default(autoincrement())
+  users  User[]
+  wall   Wall   @relation(fields: [wallId], references: [id])
+  wallId Int    @unique
 }

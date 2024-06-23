@@ -19,7 +19,7 @@ const SearchBar = () => {
     return (
         <Pressable style={styles.container} onPress={() => onPress()}>
             <Icon name='search' size={25} color={tulipColors.tulipBlack} />
-            <TextInput ref={searchRef} value={search} maxLength={40} onChangeText={text => setSearch(text)} onSubmitEditing={() => onSearch()} />
+            <TextInput ref={searchRef} value={search} maxLength={40} onChangeText={text => setSearch(text)} onSubmitEditing={() => onSearch()} color={tulipColors.tulipWhite} />
         </Pressable>
     )
 
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderStyle: 'solid',
         width: 280
-    }
+    },
 })
 
 export default SearchBar
