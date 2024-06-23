@@ -8,7 +8,7 @@ const tintColorDark = '#fff';
 const orchidMint = '#47DEC4';
 const orchidLavender = '#47399B';
 const orchidEggshell = '#F8F3E6';
-export const orchidColors = {
+export const tulipColors = {
   orchidMint: '#47DEC4',
   orchidLavender: '#47399B',
   orchidEggshell: '#F8F3E6',

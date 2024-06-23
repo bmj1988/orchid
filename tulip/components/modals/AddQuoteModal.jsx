@@ -1,7 +1,7 @@
-import { orchidColors } from "@/constants/Colors";
+import { tulipColors } from "@/constants/Colors";
 import { useState } from "react";
 import { Modal, View, Text, TextInput, StyleSheet } from "react-native";
-import { BasicRoundButton } from "../buttons/WallButtons/BasicRoundButton";
+import { BasicRoundButton } from "../buttons/BasicRoundButton";
 import { useDispatch } from "react-redux";
 import { thunkAddQuoteToWall } from "@/store/wall";
 
@@ -40,12 +40,12 @@ export default function AddQuote({ isVisible, onClose, wallId }) {
                     </View>
                     <View style={styles.textView}>
                         <Text style={styles.text}>{"Quote"}</Text>
-                        <TextInput style={styles.inputs} onChangeText={setQuote}></TextInput>
+                        <TextInput multiline={true} style={styles.inputs} onChangeText={setQuote}></TextInput>
                     </View>
                 </View>
                 <View style={styles.buttonView}>
                     <BasicRoundButton onPress={onClose} icon={"close"} />
-                    <BasicRoundButton onPress={() => AddQuoteToWall()} icon={"leaf"} />
+                    <BasicRoundButton onPress={() => AddQuoteToWall()} icon={"add"} />
                 </View>
             </View>
         </Modal>
@@ -55,15 +55,19 @@ export default function AddQuote({ isVisible, onClose, wallId }) {
 const styles = StyleSheet.create({
     modalContainer: {
         flexDirection: 'column',
-        height: '50%',
+        height: '40%',
         width: '100%',
-        backgroundColor: orchidColors.orchidMint,
+        backgroundColor: tulipColors.tulipWhite,
         position: "absolute",
         justifyContent: 'space-between',
         borderTopRightRadius: 12,
         borderTopLeftRadius: 12,
+        borderStyle: 'solid',
+        borderWidth: 1,
+        borderColor: tulipColors.tulipBlack,
         padding: 20,
-        bottom: 0
+        bottom: 0,
+        elevation: 5
     },
     textView: {
         flexDirection: 'row',
@@ -81,7 +85,10 @@ const styles = StyleSheet.create({
         fontSize: 16,
         borderWidth: 1,
         paddingLeft: 5,
-        paddingRight: 5
+        paddingRight: 5,
+        borderRadius: 12,
+        width: 200,
+        marginBottom: 10
     },
     error: {
         fontSize: 16,

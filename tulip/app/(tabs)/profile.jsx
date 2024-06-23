@@ -1,9 +1,11 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { StyleSheet, Image, Platform, View, StatusBar, Text, Button, ScrollView } from 'react-native';
+import { StyleSheet, Image, View, StatusBar, Text, ScrollView, Pressable } from 'react-native';
 import WallButton from '@/components/WallButton'
 import { useSelector } from 'react-redux';
 import { wallsArray } from '@/store/wall';
-import { orchidColors } from '@/constants/Colors';
+import { tulipColors } from '@/constants/Colors';
+import ProfileHeader from '@/components/buttons/ProfileButtons/ProfileHeader'
+import { AddWallButton } from '@/components/buttons/WallButtons/AddWall';
 
 export default function TabTwoScreen() {
   const walls = useSelector(wallsArray)
@@ -11,22 +13,20 @@ export default function TabTwoScreen() {
 
   return (
     <View style={styles.titleContainer}>
-      <View style={styles.topIcons}>
-        <Button title="follow" color={orchidColors.orchidMint}/>
-        <Ionicons size={40} name="ellipsis-horizontal" />
-      </View>
+      <ProfileHeader />
       <View style={styles.imageContainer}>
         <Image source={user.img || require('../../assets/images/HeadshotBlueBackground.jpg')} style={styles.image} />
       </View>
-      <Text style={styles.profileName}>{`@`+user.name}</Text>
+      <Text style={styles.profileName}>{`@` + user.name}</Text>
       <View style={styles.divider}></View>
       <ScrollView contentContainerStyle={styles.wallScroller}>
         {walls.length > 0 && walls.map((wall) => {
           return (
-            <WallButton wall={wall} key={wall.id}/>
+            <WallButton wall={wall} key={wall.id} />
           )
         })}
       </ScrollView>
+      <AddWallButton />
     </View>
   );
 }
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   titleContainer: {
     flex: 1,
     marginTop: StatusBar.currentHeight,
-    backgroundColor: orchidColors.orchidEggshell,
+    backgroundColor: tulipColors.tulipWhite,
     alignItems: 'center',
   },
   imageContainer: {
@@ -56,17 +56,6 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "lightgray",
     margin: 20
-  },
-  topIcons: {
-    width: "95%",
-    justifyContent: 'space-between',
-    flexDirection: 'row'
-  },
-  follow: {
-    marginLeft: 10
-  },
-  profileOptions: {
-    marginRight: 10
   },
   wallScroller: {
     width: "100%",

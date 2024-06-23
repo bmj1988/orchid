@@ -1,13 +1,11 @@
-import { Image, StyleSheet, Platform, Text, ScrollView, View, Button } from 'react-native';
+import { StyleSheet, Text, ScrollView, View } from 'react-native';
 import WallForm from '@/components/WallForm';
 import { StatusBar } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getUserWalls, wallsArray } from '../../store/wall'
-import { orchidColors } from '@/constants/Colors';
+import { tulipColors } from '@/constants/Colors';
 import { AddWallButton } from '@/components/buttons/WallButtons/AddWall'
-const name = "Walls"
-
 
 export default function WallScreen() {
   const dispatch = useDispatch()
@@ -20,11 +18,11 @@ export default function WallScreen() {
   return (
     <View style={styles.titleContainer}>
       <View style={styles.bar}></View>
-      <Text style={styles.logo}>{name}</Text>
+      <Text style={styles.logo}>{'GALLERY'}</Text>
       <ScrollView contentContainerStyle={styles.wallContainer}>
         {walls.length > 0 && walls.map((wall) => {
           return (
-            <WallForm color={orchidColors.orchidLavender} wall={wall} key={wall.id} />
+            <WallForm color={tulipColors.orchidLavender} wall={wall} key={wall.id} />
           )
         })}
       </ScrollView>
@@ -40,7 +38,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
     overflow: "scroll",
-    backgroundColor: orchidColors.orchidEggshell
+    backgroundColor: tulipColors.orchidEggshell
   },
   wallContainer: {
     gap: 8,
@@ -50,19 +48,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: 350,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
   logo: {
     color: 'black',
-    fontSize: 50,
-    marginBottom: 100,
+    fontSize: 60,
+    marginBottom: 80,
+    fontFamily: 'PlayfairDisplay'
   },
   bar: {
     height: StatusBar.currentHeight,
+  },
+  icon: {
+    fontSize: 100,
+  },
+  iconText: {
+    position: 'absolute',
+    top: 15
   }
 });

@@ -1,7 +1,7 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors, orchidColors } from '@/constants/Colors';
+import { Colors, tulipColors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function TabLayout() {
@@ -11,8 +11,13 @@ export default function TabLayout() {
     <Tabs
       initialRouteName="index"
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: tulipColors.tulipBlack,
         headerShown: false,
+        tabBarStyle: {
+          backgroundColor: tulipColors.tulipWhite,
+          borderColor: tulipColors.tulipWhite,
+          elevation: 0
+        }
       }}>
       <Tabs.Screen
         name="index"

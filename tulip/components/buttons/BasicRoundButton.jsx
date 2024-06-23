@@ -1,5 +1,5 @@
 import { StyleSheet, Pressable } from 'react-native'
-import { orchidColors } from '../../../constants/Colors'
+import { tulipColors } from '@/constants/Colors'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 export const BasicRoundButton = ({ onPress, icon }) => {
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     button: {
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: orchidColors.orchidLavender,
+        backgroundColor: tulipColors.tulipBlack,
         height: 60,
         width: 60,
         borderRadius: 50,
@@ -22,6 +22,6 @@ const styles = StyleSheet.create({
         margin: 20
     },
     icon: {
-        color: orchidColors.orchidMint
+        color: tulipColors.tulipWhite
     }
 })

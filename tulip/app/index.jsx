@@ -1,14 +1,14 @@
-import { StyleSheet, Text, TextInput, View, Button, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, SafeAreaView, Image } from 'react-native';
 import { router } from 'expo-router';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { thunkLogin } from '../store/session'
 import { csrfFetch } from '@/store/csrfFetch';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { orchidColors } from '@/constants/Colors';
+import { tulipColors } from '@/constants/Colors';
 
 const URL = process.env.EXPO_PUBLIC_LOCAL_TUNNEL
-const name = "Tulip"
+const name = "Tulip "
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
@@ -67,7 +67,10 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.titleContainer}>
-      <Text style={styles.logo}>{name}</Text>
+      <View style={styles.logoView}>
+        <Text style={styles.logo}>{name}</Text>
+        <Image style={styles.logoTwo} source={{ uri: 'https://i.gyazo.com/7be89f6a141b3e4f37b2c9608ca0fcb9.png' }} />
+      </View>
       <View style={styles.buttonContainer}>
         {Object.values(errors).length > 0 && <Text style={styles.errors}>{errors.error}</Text>}
         <TextInput
@@ -83,10 +86,10 @@ export default function HomeScreen() {
           autoComplete='current-password'
           style={styles.loginInputs}
         />
-        <Button title="Login" onPress={(e) => login(e)} color={orchidColors.orchidLavender} />
-        <Button title="Sign up" color={orchidColors.orchidLavender} />
-        <Button title="CSRF-Token" onPress={(e) => generateCSRF(e)} color={orchidColors.orchidLavender} />
-        <Button title="Demo Login" onPress={(e) => demoLogin(e)} color={orchidColors.orchidLavender} />
+        <Button title="Login" onPress={(e) => login(e)} color={tulipColors.orchidLavender} />
+        <Button title="Sign up" color={tulipColors.orchidLavender} />
+        <Button title="CSRF-Token" onPress={(e) => generateCSRF(e)} color={tulipColors.orchidLavender} />
+        <Button title="Demo Login" onPress={(e) => demoLogin(e)} color={tulipColors.orchidLavender} />
       </View>
     </SafeAreaView>
   );
@@ -97,9 +100,15 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 150,
+    gap: 100,
     flex: 1,
-    backgroundColor: '#F0EAD6'
+    backgroundColor: tulipColors.tulipWhite
+  },
+  logoView: {
+    flexDirection: 'row',
+    justifyContents: 'center',
+    alignItems: 'center',
+    paddingTop: 50
   },
   buttonContainer: {
     gap: 8,
@@ -115,12 +124,17 @@ const styles = StyleSheet.create({
   },
   logo: {
     color: 'black',
-    fontSize: 50
+    fontSize: 80,
+    fontFamily: 'Allison',
   },
   loginInputs: {
     backgroundColor: 'white',
   },
   errors: {
     color: 'red'
+  },
+  logoTwo: {
+    height: 220,
+    width: 80,
   }
 });

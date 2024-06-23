@@ -1,4 +1,4 @@
-import { orchidColors } from "@/constants/Colors"
+import { tulipColors } from "@/constants/Colors"
 import { Ionicons } from "@expo/vector-icons"
 import { router } from "expo-router"
 import { StyleSheet, View, Text, Button, TouchableOpacity } from "react-native"
@@ -7,12 +7,12 @@ import { StyleSheet, View, Text, Button, TouchableOpacity } from "react-native"
 const WallButton = ({ wall }) => {
 
     return (
-        <View style={[styles.wallView, { backgroundColor: orchidColors.orchidLavender }]}>
+        <View style={[styles.wallView, { backgroundColor: tulipColors.tulipOrange }]}>
             <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/wall', params: { wallId: wall.id } })}>
                 <Text style={styles.text}>
                     {wall.name}
                 </Text>
-                <Ionicons size={30} name="ellipsis-horizontal" color={orchidColors.orchidMint} />
+                <Ionicons size={30} name="ellipsis-horizontal" color={tulipColors.tulipWhite} />
             </TouchableOpacity>
         </View>
     )
@@ -20,11 +20,10 @@ const WallButton = ({ wall }) => {
 
 const styles = StyleSheet.create({
     wallView: {
-        width: 220,
-        height: 100,
+        width: 250,
+        height: 80,
         justifyContent: 'center',
         alignItems: "center",
-        borderRadius: 8,
         elevation: 5,
     },
     button: {
@@ -33,7 +32,8 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     text: {
-        color: "white",
+        color: tulipColors.tulipWhite,
+        fontFamily: 'sans-serif',
         fontSize: 25,
     }
 })

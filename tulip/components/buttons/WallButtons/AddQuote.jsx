@@ -1,4 +1,4 @@
-import { BasicRoundButton } from "./BasicRoundButton";
+import { BasicRoundButton } from "../BasicRoundButton";
 
 
 export const AddQuoteButton = ({onPress}) => {

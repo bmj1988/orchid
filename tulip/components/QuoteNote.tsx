@@ -8,21 +8,19 @@ interface Quote {
 
 const QuoteNote: React.FC<Quote> = ({ quote, author, color }) => {
     return (
-        <>
-            <View style={styles.quoteContainer}>
-                <View>
-                    <View style={[styles.textContainer, { backgroundColor: color }]}>
-                        <Text style={styles.quoteText}>
-                            {quote}
-                        </Text>
-                        <Text style={styles.authorText}>
-                            {"- " + author}
-                        </Text>
-                    </View>
+        <View style={styles.quoteContainer}>
+            <View>
+                <View style={[styles.textContainer, { backgroundColor: color }]}>
+                    <Text style={styles.quoteText}>
+                        {quote}
+                    </Text>
+                    <Text style={styles.authorText}>
+                        {"- " + author}
+                    </Text>
                 </View>
-
             </View>
-        </>
+
+        </View>
     )
 }
 
