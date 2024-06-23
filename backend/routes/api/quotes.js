@@ -9,7 +9,7 @@ router.get('/feed', async (req, res, next) => {
     try {
         const feed = await prisma.quote.findMany({
             orderBy: {
-                createdAt: 'asc'
+                postedOn: 'asc'
             }
         })
         res.json(feed)
