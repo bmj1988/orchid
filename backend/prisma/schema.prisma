@@ -11,29 +11,55 @@ datasource db {
 }
 
 model User {
-  id             Int     @id @default(autoincrement())
-  email          String  @unique
+  id             Int       @id @default(autoincrement())
+  email          String    @unique
   name           String?
+  username       String?
   hashedPassword String
   preferences    Int?
-  img            String
+  img            String?
   walls          Wall[]
+  Comment        Comment[]
+  Likes          Like[]
 }
 
 model Wall {
   id     Int     @id @default(autoincrement())
   access String  @default("public")
   name   String
-  user   User    @relation(fields: [userId], references: [id])
+  user   User[]
   userId Int
   quotes Quote[]
 }
 
 model Quote {
-  id        Int      @id @default(autoincrement())
-  wall      Wall     @relation(fields: [wallId], references: [id])
+  id        Int       @id @default(autoincrement())
+  wall      Wall      @relation(fields: [wallId], references: [id])
   wallId    Int
   content   String
   author    String
-  createdAt DateTime @default(now())
+  postedOn  DateTime  @default(now())
+  updatedOn DateTime  @default(now())
+  Comment   Comment[]
+  Likes     Like[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  quote     Quote    @relation(fields: [quoteId], references: [id])
+  quoteId   Int
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  postedOn  DateTime @default(now())
+  updatedOn DateTime @default(now())
+}
+
+model Like {
+  id       Int      @id @default(autoincrement())
+  quote    Quote    @relation(fields: [quoteId], references: [id])
+  quoteId  Int
+  user     User     @relation(fields: [userId], references: [id])
+  userId   Int
+  postedOn DateTime @default(now())
 }
