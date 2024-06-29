@@ -45,7 +45,8 @@ router.post('/', requireAuth, async (req, res, next) => {
                 quotes: {
                     create: {
                         content,
-                        author
+                        author,
+                        userId: req.user.id
                     }
                 }
             }

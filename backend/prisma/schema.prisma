@@ -24,7 +24,7 @@ model User {
   quotes         Quote[]
   followedBy     Follows[] @relation("followedBy")
   following      Follows[] @relation("following")
-  Group          Group[]
+  groups         Group[]
 }
 
 model Wall {

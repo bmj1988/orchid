@@ -38,3 +38,13 @@ export const Colors = {
     tabIconSelected: tintColorDark,
   },
 };
+
+export const ColorDropDownOptions = [
+  { label: 'Paper', value: tulipColors.tulipWhite },
+  { label: 'Ink', value: tulipColors.tulipBlack },
+  { label: 'Sky', value: tulipColors.tulipBlue },
+  { label: 'Stem', value: tulipColors.tulipGreen },
+  { label: 'Petal', value: tulipColors.tulipOrange },
+  { label: 'Ember', value: tulipColors.tulipMediumOrange },
+  { label: 'Gold', value: tulipColors.tulipLightOrange },
+]

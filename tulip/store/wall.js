@@ -96,6 +96,8 @@ export const thunkAddQuoteToWall = (data) => async (dispatch) => {
     }
     catch (e) {
         console.error(e)
+        const err = await e.json()
+        console.log(err)
     }
 
 }
