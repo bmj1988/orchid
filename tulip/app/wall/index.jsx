@@ -1,4 +1,3 @@
-import QuoteNote from "@/components/QuoteNote";
 import { View, Text, StyleSheet, StatusBar, ScrollView } from "react-native"
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from "react";
@@ -8,23 +7,35 @@ import { tulipColors } from "@/constants/Colors";
 import AddQuoteModal from '@/components/modals/AddQuoteModal'
 import { BasicRoundButton } from "@/components/buttons/BasicRoundButton";
 import WallIconQuote from "@/components/buttons/WallButtons/WallIconQuote";
+import HorizontalEllipsis from "@/components/buttons/HorizontalEllipsis";
+import WallMenu from "@/components/buttons/WallButtons/WallMenu";
+import { quotesArray } from "@/store/quotes";
+
+
 const Wall = () => {
     const dispatch = useDispatch()
     const { wallId } = useLocalSearchParams()
     const [modalVisible, setModalVisible] = useState(false)
+    const [menuVisible, setMenuVisible] = useState(false)
 
     useEffect(() => {
         dispatch(thunkWallById(wallId))
     }, [wallId])
     const wall = useSelector((state) => state.walls[wallId])
+    const quotes = useSelector(quotesArray)
 
     return (
         <View style={styles.wallContainer}>
+            <View style={styles.menuButton}>
+                <HorizontalEllipsis onPress={() => setMenuVisible(!menuVisible)} />
+                {menuVisible && <WallMenu setVisible={() => (setMenuVisible(!menuVisible))} />}
+
+            </View>
             <Text style={styles.wallName}>{wall.name.toUpperCase()}</Text>
             <ScrollView contentContainerStyle={styles.scroller}>
-                {wall.quotes && wall.quotes.map((quote) => {
+                {quotes && quotes.map((quote) => {
                     return (
-                        <WallIconQuote quote={quote.content} author={quote.author} key={quote.id} />
+                        <WallIconQuote quote={{...quote, wallId: Number(wallId)}} key={quote.id} />
                     )
                 })}
             </ScrollView>
@@ -54,6 +65,9 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         gap: 20,
         justifyContent: 'center'
+    },
+    menuButton: {
+        paddingLeft: 10
     }
 })
 

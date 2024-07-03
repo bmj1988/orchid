@@ -5,7 +5,7 @@ import { useState } from 'react'
 import QuoteMenu from '@/components/buttons/WallButtons/QuoteMenu'
 import EditQuote from '@/components/modals/EditQuoteModal'
 
-const WallIconQuote = ({ quote, author }) => {
+const WallIconQuote = ({ quote }) => {
     const [modalVisible, setModalVisible] = useState(false)
 
 
@@ -14,12 +14,12 @@ const WallIconQuote = ({ quote, author }) => {
             <Pressable onPress={() => console.log('tester')} onLongPress={() => setModalVisible(true)}>
                 <Icon name="sticky-note" size={180} color={tulipColors.tulipOrange} />
                 <View style={styles.textView}>
-                    <Text numberOfLines={4} style={[styles.text, { fontFamily: 'PlayfairDisplay' }]}>{quote}</Text>
+                    <Text numberOfLines={4} style={[styles.text, { fontFamily: 'PlayfairDisplay' }]}>{quote.content}</Text>
                     <Text style={[styles.text, { fontFamily: 'Allison', fontSize: 25 }]}>
-                        {author}
+                        {quote.author}
                     </Text>
                 </View>
-                <EditQuote isVisible={modalVisible} onClose={() => setModalVisible(false)} content={quote} authoredBy={author} wallId={1} />
+                <EditQuote isVisible={modalVisible} onClose={() => setModalVisible(false)} quote={quote}/>
                 {/* {visible && <QuoteMenu visible={visible} setVisible={() => setVisible(!visible)} />} */}
             </Pressable>
 

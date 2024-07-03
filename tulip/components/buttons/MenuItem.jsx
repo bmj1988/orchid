@@ -18,8 +18,6 @@ const styles = StyleSheet.create({
 
     },
     top: {
-        // borderTopLeftRadius: 8,
-        // borderTopRightRadius: 8,
         borderBottomWidth: 1,
         borderBottomColor: tulipColors.tulipBlack
     },
@@ -28,12 +26,11 @@ const styles = StyleSheet.create({
         borderBottomColor: tulipColors.tulipBlack,
     },
     bottom: {
-        // borderBottomLeftRadius: 8,
-        // borderBottomRightRadius: 8,
     },
     text: {
         color: tulipColors.tulipBlack,
         fontFamily: 'PlayfairDisplay',
+        fontSize: 20
     }
 })
 

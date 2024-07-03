@@ -1,11 +1,8 @@
 import HE from '../../HorizontalEllipsis'
 
-export default function ProfileMenuButton() {
-    const onPress = () => {
-        console.log('Profile ellipsis pressed')
-    }
+export default function ProfileMenuButton({ onPress }) {
 
     return (
-        <HE onPress={() => onPress()} />
+        <HE onPress={onPress} />
     )
 }

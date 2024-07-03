@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Modal, View, Text, TextInput, StyleSheet } from "react-native";
 import { BasicRoundButton } from "../buttons/BasicRoundButton";
 import { useDispatch } from "react-redux";
-import { thunkAddQuoteToWall } from "@/store/wall";
+import { thunkAddQuote } from "@/store/quotes";
 
 export default function AddQuote({ isVisible, onClose, wallId }) {
     const dispatch = useDispatch();
@@ -21,7 +21,7 @@ export default function AddQuote({ isVisible, onClose, wallId }) {
             wallId: Number(wallId)
         }
 
-        await dispatch(thunkAddQuoteToWall(newQuote))
+        await dispatch(thunkAddQuote(newQuote))
         onClose()
 
     }

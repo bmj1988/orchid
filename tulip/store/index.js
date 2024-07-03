@@ -4,6 +4,7 @@ import { sessionReducer } from "./session";
 import { createLogger } from "redux-logger"
 import { thunk } from "redux-thunk";
 import { feedReducer } from "./feed"
+import { quoteReducer } from "./quotes"
 
 /// LOCAL TUNNEL URL FOR TESTING
 
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
     walls: wallReducer,
     session: sessionReducer,
     feed: feedReducer,
+    quotes: quoteReducer,
 })
 
 

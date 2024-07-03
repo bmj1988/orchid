@@ -1,11 +1,14 @@
 import { csrfFetch } from "./csrfFetch";
 import { createSelector } from "reselect";
+import { loadQuotes } from "./quotes";
 const URL = process.env.EXPO_PUBLIC_LOCAL_TUNNEL
 
 /// ACTIONS
 
 const WALLS = 'WALLS/'
 const WALL_DETAILS = 'WALLS/DETAILS'
+const EDIT_QUOTE = 'quotes/EDIT'
+const QUOTE_DELETE = 'quote/DEL'
 
 /// ACTION CREATORS
 
@@ -26,6 +29,27 @@ const wallDetails = (payload) => {
         }
     )
 }
+
+const deleteQuote = (payload) => {
+    return (
+        {
+            type: QUOTE_DELETE,
+            payload
+        }
+    )
+}
+
+//  if we normalize the quote data we will need this and it will be slightly more
+// efficient. for show model this will work completely fine
+
+// const editQuote = (payload) => {
+//     return (
+//         {
+//             type: EDIT_QUOTE,
+//             payload
+//         }
+//     )
+// }
 
 /// THUNKS
 
@@ -48,7 +72,8 @@ export const thunkWallById = (id) => async (dispatch) => {
         const response = await csrfFetch(`${URL}/api/walls/${id}`)
         if (response.ok) {
             const wall = await response.json()
-            dispatch(wallDetails(wall))
+            await dispatch(wallDetails(wall))
+            await dispatch(loadQuotes(wall.quotes))
         }
     }
     catch (e) {
@@ -79,34 +104,12 @@ export const thunkCreateWall = (wallData) => async (dispatch) => {
     }
 }
 
-export const thunkAddQuoteToWall = (data) => async (dispatch) => {
-    try {
-        const response = await csrfFetch(`${URL}/api/quotes`, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        })
-        if (response.ok) {
-            const wall = await response.json()
-            dispatch(wallDetails(wall))
-            console.log(wallDetails(wall))
-        }
-    }
-    catch (e) {
-        console.error(e)
-        const err = await e.json()
-        console.log(err)
-    }
 
-}
 /// SELECTORS
 
 export const wallsArray = createSelector((state) => state.walls, (walls) => {
     return Object.values(walls)
 })
-
 
 /// REDUCER
 
@@ -124,7 +127,6 @@ export const wallReducer = (state = {}, action) => {
             wallState[action.payload.id] = action.payload
             return wallState;
         }
-
         default: {
             return wallState;
         }

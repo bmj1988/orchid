@@ -4,31 +4,36 @@ import { Modal, View, Text, TextInput, StyleSheet, ScrollView } from "react-nati
 import { BasicRoundButton } from "../buttons/BasicRoundButton";
 import { useDispatch } from "react-redux";
 import { Dropdown } from "react-native-element-dropdown";
-import { thunkAddQuoteToWall } from "@/store/wall";
+import { thunkDeleteQuote, thunkEditQuote } from "@/store/quotes";
 
-export default function EditQuote({ isVisible, onClose, wallId, content, authoredBy }) {
+export default function EditQuote({ isVisible, onClose, quote }) {
     const dispatch = useDispatch();
-    const [author, setAuthor] = useState(authoredBy)
-    const [quote, setQuote] = useState(content)
+    const [author, setAuthor] = useState(quote.author)
+    const [content, setContent] = useState(quote.content)
     const [color, setColor] = useState(null)
     const [dropdownFocus, setDropdownFocus] = useState(false)
     const [errors, setErrors] = useState({})
-    console.log(ColorDropDownOptions)
 
     const EditQuoteToWall = async () => {
         if (!author) errors['author'] = "No Author Provided"
-        if (!quote) errors['quote'] = "No Quote Provided"
+        if (!content) errors['quote'] = "No Quote Provided"
         if (Object.values(errors).length) return
-        const editQuote = {
+        const editedQuote = {
+            id: quote.id,
             author,
-            content: quote,
-            wallId: Number(wallId)
+            content,
+            wallId: quote.wallId
         }
-
-        // await dispatch(thunkEditQuote(newQuote))
+        await dispatch(thunkEditQuote(editedQuote))
         onClose()
 
     }
+
+    const DeleteQuoteFromWall = async (id) => {
+        await dispatch(thunkDeleteQuote(id))
+        onClose()
+    }
+
     return (
         <Modal animationType="slide" transparent={true} visible={isVisible}>
             <ScrollView contentContainerStyle={styles.modalContainer}>
@@ -44,14 +49,14 @@ export default function EditQuote({ isVisible, onClose, wallId, content, authore
                     </View>
                     <View style={styles.textView}>
                         <Text style={styles.text}>{"Quote"}</Text>
-                        <TextInput multiline={true} value={quote} style={styles.inputs} onChangeText={setQuote} numberOfLines={4}></TextInput>
+                        <TextInput multiline={true} value={content} style={styles.inputs} onChangeText={setContent} numberOfLines={4}></TextInput>
                     </View>
                     <View style={styles.textView}>
                         <Text style={styles.text}>{"Color"}</Text>
                         <Dropdown
                             data={ColorDropDownOptions}
                             value={color}
-                            style={[styles.dropdown, {backgroundColor: color}]}
+                            style={[styles.dropdown, { backgroundColor: color }]}
                             placeholderStyle={styles.placeholderStyle}
                             inputSearchStyle={styles.inputSearchStyle}
                             selectedTextStyle={styles.selectedTextStyle}
@@ -71,7 +76,7 @@ export default function EditQuote({ isVisible, onClose, wallId, content, authore
                 <View style={styles.buttonView}>
                     <BasicRoundButton onPress={onClose} icon={"close"} />
                     <BasicRoundButton onPress={() => EditQuoteToWall()} icon={"save-outline"} />
-                    <BasicRoundButton onPress={() => console.log("delete click")} icon={"trash-bin-outline"} />
+                    <BasicRoundButton onPress={() => DeleteQuoteFromWall(quote.id)} icon={"trash-bin-outline"} />
                 </View>
             </ScrollView>
         </Modal>

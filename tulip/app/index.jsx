@@ -41,7 +41,6 @@ export default function HomeScreen() {
       let token = response.headers.get('set-cookie')
       token = token.slice(11, 47)
       await AsyncStorage.setItem('XSRF-TOKEN', token)
-      // console.log(token)
       const XSRF = await AsyncStorage.getItem('XSRF-TOKEN')
       console.log(XSRF)
     }
@@ -55,7 +54,6 @@ export default function HomeScreen() {
     }
     try {
       const response = await dispatch(thunkLogin(credentials))
-      console.log(response)
       router.replace('(tabs)')
 
     }
@@ -86,8 +84,8 @@ export default function HomeScreen() {
           autoComplete='current-password'
           style={styles.loginInputs}
         />
-        <Button title="Login" onPress={(e) => login(e)} color={tulipColors.orchidLavender} />
-        <Button title="Sign up" color={tulipColors.orchidLavender} />
+        <Button title="Login" onPress={(e) => login(e)} color={tulipColors.tulipOrange} />
+        <Button title="Sign up" color={tulipColors.tulipGreen} onPress={() => console.log('press')} />
         <Button title="CSRF-Token" onPress={(e) => generateCSRF(e)} color={tulipColors.orchidLavender} />
         <Button title="Demo Login" onPress={(e) => demoLogin(e)} color={tulipColors.orchidLavender} />
       </View>

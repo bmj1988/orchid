@@ -37,42 +37,14 @@ router.get('/:id', async (req, res, next) => {
 // ADD QUOTE TO WALL / POST QUOTE
 
 router.post('/', requireAuth, async (req, res, next) => {
-    const { wallId, content, author } = req.body
     try {
-        await prisma.wall.update({
-            where: { id: parseInt(wallId), userId: req.user.id },
+        let quote = await prisma.quote.create({
             data: {
-                quotes: {
-                    create: {
-                        content,
-                        author,
-                        userId: req.user.id
-                    }
-                }
+                userId: req.user.id,
+                ...req.body
             }
         })
-        const wall = await prisma.wall.findUnique({
-            where: { id: wallId },
-            include: {
-                quotes: {
-                    select: {
-                        content: true,
-                        author: true,
-                        id: true
-                    }
-                },
-                user: {
-                    select: {
-                        id: true,
-                        name: true,
-                    }
-                },
-                _count: {
-                    select: { quotes: true },
-                }
-            }
-        })
-        return res.json(wall)
+        return res.json(quote)
     }
     catch (e) {
         console.log(e.message)
@@ -85,14 +57,17 @@ router.post('/', requireAuth, async (req, res, next) => {
 router.put('/:id', requireAuth, async (req, res, next) => {
 
     try {
-        const updatedQuote = await prisma.quote.update({
+        const quote = await prisma.quote.update({
             where: {
-                id: parseInt(req.params.id), wall: {
-                    userId: req.user.id
-                }
+                id: parseInt(req.params.id),
+                userId: req.user.id
+            },
+            data: {
+                ...req.body
             }
         })
-        return res.status(201).json(updatedQuote)
+
+        return res.status(201).json(quote)
     }
     catch (e) {
         console.log(e.message)
@@ -107,9 +82,7 @@ router.delete('/:id', requireAuth, async (req, res, next) => {
         await prisma.quote.delete({
             where: {
                 id: Number(req.params.id),
-                wall: {
-                    userId: req.user.id
-                }
+                userId: req.user.id
 
             }
         })

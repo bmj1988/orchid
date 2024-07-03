@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getUserWalls, wallsArray } from '../../store/wall'
 import { tulipColors } from '@/constants/Colors';
-import { AddWallButton } from '@/components/buttons/WallButtons/AddWall'
+import { BasicRoundButton } from '@/components/buttons/BasicRoundButton';
 
 export default function WallScreen() {
   const dispatch = useDispatch()
@@ -14,6 +14,9 @@ export default function WallScreen() {
   }, [])
   const walls = useSelector(wallsArray)
 
+  const newWall = () => {
+    console.log('new wall')
+  }
 
   return (
     <View style={styles.titleContainer}>
@@ -25,7 +28,7 @@ export default function WallScreen() {
           )
         })}
       </ScrollView>
-      <AddWallButton />
+      <BasicRoundButton onPress={() => newWall()} icon={'add'} />
     </View>
   );
 }

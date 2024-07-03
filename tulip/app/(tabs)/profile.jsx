@@ -5,15 +5,23 @@ import { useSelector } from 'react-redux';
 import { wallsArray } from '@/store/wall';
 import { tulipColors } from '@/constants/Colors';
 import ProfileHeader from '@/components/buttons/ProfileButtons/ProfileHeader'
-import { AddWallButton } from '@/components/buttons/WallButtons/AddWall';
+import { useState } from 'react';
+import ProfileMenu from '@/components/buttons/ProfileButtons/ProfileMenu'
+import { BasicRoundButton } from '@/components/buttons/BasicRoundButton';
 
 export default function TabTwoScreen() {
   const walls = useSelector(wallsArray)
   const user = useSelector((state) => state.session.user)
+  const [menuVisible, setMenuVisible] = useState(false)
+
+  const newWall = () => {
+    console.log('hi')
+  }
 
   return (
     <View style={styles.titleContainer}>
-      <ProfileHeader />
+      <ProfileHeader showMenu={() => setMenuVisible(!menuVisible)} />
+      {menuVisible && <ProfileMenu setVisible={() => setMenuVisible()} />}
       <View style={styles.imageContainer}>
         <Image source={user.img || require('../../assets/images/HeadshotBlueBackground.jpg')} style={styles.image} />
       </View>
@@ -26,7 +34,7 @@ export default function TabTwoScreen() {
           )
         })}
       </ScrollView>
-      <AddWallButton />
+      <BasicRoundButton onPress={() => newWall()} icon={'add'} />
     </View>
   );
 }
@@ -34,9 +42,9 @@ export default function TabTwoScreen() {
 const styles = StyleSheet.create({
   titleContainer: {
     flex: 1,
-    marginTop: StatusBar.currentHeight,
+    paddingTop: StatusBar.currentHeight,
     backgroundColor: tulipColors.tulipWhite,
-    marginBottom: 35,
+    paddingBottom: 35,
     alignItems: 'center',
   },
   imageContainer: {
