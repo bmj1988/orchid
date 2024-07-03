@@ -60,13 +60,14 @@ router.get('/:id', requireAuth, async (req, res) => {
 // CREATE NEW WALL
 
 router.post('/new', requireAuth, async (req, res, next) => {
-    const { name, quote } = req.body
+    const { name, access, quote, userList } = req.body
     const userId = parseInt(req.user.id)
     let newWall;
     if (!quote) {
         newWall = {
             name,
             userId,
+            access,
         }
     }
     else {

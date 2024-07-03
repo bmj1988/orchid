@@ -1,9 +1,9 @@
-import { tulipColors } from "@/constants/Colors";
 import { useState } from "react";
-import { Modal, View, Text, TextInput, StyleSheet } from "react-native";
+import { Modal, View, Text, TextInput } from "react-native";
 import { BasicRoundButton } from "../buttons/BasicRoundButton";
 import { useDispatch } from "react-redux";
 import { thunkAddQuote } from "@/store/quotes";
+import styles from './_styles'
 
 export default function AddQuote({ isVisible, onClose, wallId }) {
     const dispatch = useDispatch();
@@ -12,8 +12,8 @@ export default function AddQuote({ isVisible, onClose, wallId }) {
     const [errors, setErrors] = useState({})
 
     const AddQuoteToWall = async () => {
-        if (!author) errors['author'] = "No Author Provided"
-        if (!quote) errors['quote'] = "No Quote Provided"
+        if (!author) setErrors({...errors, Author: "No Author Provided"})
+        if (!quote) setErrors({...errors, Quote: "No Quote Provided"})
         if (Object.values(errors).length) return
         const newQuote = {
             author,
@@ -51,47 +51,3 @@ export default function AddQuote({ isVisible, onClose, wallId }) {
         </Modal>
     )
 }
-
-const styles = StyleSheet.create({
-    modalContainer: {
-        flexDirection: 'column',
-        height: '40%',
-        width: '100%',
-        backgroundColor: tulipColors.tulipWhite,
-        position: "absolute",
-        justifyContent: 'space-between',
-        borderTopRightRadius: 12,
-        borderTopLeftRadius: 12,
-        borderStyle: 'solid',
-        borderWidth: 1,
-        borderColor: tulipColors.tulipBlack,
-        padding: 20,
-        bottom: 0,
-        elevation: 5
-    },
-    textView: {
-        flexDirection: 'row',
-    },
-    buttonView: {
-        flexDirection: 'row',
-        justifyContent: 'space-around'
-    },
-    text: {
-        fontSize: 20,
-        marginRight: 20,
-    },
-    inputs: {
-        backgroundColor: "#EEEEEE",
-        fontSize: 16,
-        borderWidth: 1,
-        paddingLeft: 5,
-        paddingRight: 5,
-        borderRadius: 12,
-        width: 200,
-        marginBottom: 10
-    },
-    error: {
-        fontSize: 16,
-        color: "red"
-    }
-})

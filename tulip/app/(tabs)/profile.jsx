@@ -1,5 +1,4 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { StyleSheet, Image, View, StatusBar, Text, ScrollView, Pressable } from 'react-native';
+import { StyleSheet, Image, View, StatusBar, Text, ScrollView, } from 'react-native';
 import WallButton from '@/components/WallButton'
 import { useSelector } from 'react-redux';
 import { wallsArray } from '@/store/wall';
@@ -8,15 +7,13 @@ import ProfileHeader from '@/components/buttons/ProfileButtons/ProfileHeader'
 import { useState } from 'react';
 import ProfileMenu from '@/components/buttons/ProfileButtons/ProfileMenu'
 import { BasicRoundButton } from '@/components/buttons/BasicRoundButton';
+import AddWallModal from '@/components/modals/AddWallModal'
 
 export default function TabTwoScreen() {
   const walls = useSelector(wallsArray)
   const user = useSelector((state) => state.session.user)
   const [menuVisible, setMenuVisible] = useState(false)
-
-  const newWall = () => {
-    console.log('hi')
-  }
+  const [modalVisible, setModalVisible] = useState(false)
 
   return (
     <View style={styles.titleContainer}>
@@ -34,7 +31,8 @@ export default function TabTwoScreen() {
           )
         })}
       </ScrollView>
-      <BasicRoundButton onPress={() => newWall()} icon={'add'} />
+      <BasicRoundButton onPress={() => setModalVisible(true)} icon={'add'} />
+      <AddWallModal isVisible={modalVisible} onClose={() => setModalVisible(false)} />
     </View>
   );
 }
