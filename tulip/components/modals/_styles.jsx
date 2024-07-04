@@ -12,11 +12,27 @@ export default styles = StyleSheet.create({
         borderTopRightRadius: 12,
         borderTopLeftRadius: 12,
         borderStyle: 'solid',
-        borderWidth: 1,
+        borderWidth: 2,
         borderColor: tulipColors.tulipBlack,
         padding: 20,
         bottom: 0,
-        elevation: 5
+        elevation: 5,
+    },
+    newWallModalContainer: {
+        flexDirection: 'column',
+        height: '60%',
+        width: '100%',
+        backgroundColor: tulipColors.tulipWhite,
+        position: "absolute",
+        justifyContent: 'space-between',
+        borderTopRightRadius: 12,
+        borderTopLeftRadius: 12,
+        borderStyle: 'solid',
+        borderWidth: 2,
+        borderColor: tulipColors.tulipBlack,
+        padding: 20,
+        bottom: 0,
+        elevation: 5,
     },
     textView: {
         flexDirection: 'row',
@@ -85,6 +101,19 @@ export default styles = StyleSheet.create({
     iconLabel: {
         position: 'fixed',
         width: 80,
-
-    }
+    },
+    lineBreak: {
+        height: 1,
+        width: '75%',
+        backgroundColor: tulipColors.tulipBlack,
+        marginBottom: 20,
+        marginTop: 20
+    },
+    // autocompleteContainer: {
+    //     position: 'absolute',
+    //     flex: 1,
+    //     zIndex: 1,
+    //     right: 1,
+    //     width: 100,
+    // }
 })
