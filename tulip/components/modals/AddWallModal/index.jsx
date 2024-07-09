@@ -3,12 +3,14 @@ import { ColorDropDownOptions } from "@/constants/Colors";
 import styles from '../_styles'
 import { useState } from 'react';
 import { thunkCreateWall } from '../../../store/wall';
-import { Modal, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
+import { Modal, ScrollView, Text, View } from 'react-native';
 import { Dropdown } from "react-native-element-dropdown";
-import Icon from 'react-native-vector-icons/Ionicons'
 import { BasicRoundButton } from '../../buttons/BasicRoundButton';
-import { csrfFetch } from '@/store/csrfFetch';
-import NameInput from './nameInput';
+import NameInput from './NameInput';
+import AccessSelector from './AccessSelector'
+import SharedSelector from './SharedSelector';
+import UsersList from './UsersList';
+import UserSearch from './UserSearch';
 
 export default function AddWallModal({ isVisible, onClose }) {
     const dispatch = useDispatch();
@@ -19,88 +21,48 @@ export default function AddWallModal({ isVisible, onClose }) {
     const [access, setAccess] = useState("public")
     const [errors, setErrors] = useState({})
     const [userSearch, setUserSearch] = useState("")
-    const [userToAdd, setUserToAdd] = useState({})
     const [dropdownFocus, setDropdownFocus] = useState(false)
     const [acData, setAcData] = useState([])
-
-    let followers;
-    const fetchFollowers = async () => {
-        followers = await csrfFetch()
-        setAcData(followers)
-    }
-
-    const filterFollowers = () => {
-        let ac = followers.filter((follower) => follower.username.toLowerCase().includes(userSearch.toLowerCase()))
-        setAcData(ac)
-    }
-
-    const addUser = () => {
-        if (userList.length > 4) {
-            setErrors({...errors, maxUsers: "Cannot start a shared wall with more than 5 users"})
-            return
-        }
-        user = {
-            username: userSearch
-        }
-        setUserList([...userList, user])
-        setUserSearch("")
-    }
-
-    const removeUser = (username) => {
-        setUserList(userList.filter((user) => user.username !== username))
-    }
+    const [friends, setFriends] = useState([])
 
     const createWall = async () => {
+        const usersArray = []
+        for (let user of userList) {
+            usersArray.push({ id: user.id })
+        }
+
+        console.log(usersArray)
         const newWall = {
             access,
             name,
-            userList,
+            usersArray,
             color
         }
         await dispatch(thunkCreateWall(newWall))
+        setName("")
+        setAccess("public")
+        setColor(null)
+        setErrors({})
+        setShared(false)
+        setUserList([])
+        setUserSearch("")
+        setAcData([])
+        onClose()
     }
 
     return (
         <Modal animationType='slide' transparent={true} visible={isVisible}>
             <ScrollView contentContainerStyle={styles.newWallModalContainer} keyboardShouldPersistTaps="always">
                 <View>
-                    {/* ERRORS */}
                     {Object.values(errors).length > 0 && Object.values(errors).map((error) => {
                         return (
                             <Text style={styles.error}>{error}</Text>
                         )
                     })}
-                    {/* NAME INPUT */}
-                    <NameInput styles={styles} name={name} setName={setName}/>
-                    {/* ACCESS SELECTOR */}
+                    <NameInput styles={styles} name={name} setName={setName} />
                     <View style={styles.iconRow}>
-                        <View styles={styles.iconView}>
-                            {/* Refactor these into single component WallOptionsPublicPrivate */}
-                            {access === "public" && <Pressable onPress={() => setAccess("private")}>
-                                <Icon name={"lock-open-outline"} style={styles.icon} size={25} />
-                            </Pressable>}
-                            {access === "private" && <Pressable onPress={() => setAccess("public")}>
-                                <Icon name={"lock-closed"} size={25} style={styles.icon} />
-                            </Pressable>}
-                            <View style={styles.iconLabel}>
-                                <Text style={{ textAlign: "left", textAlignVertical: "center" }}>{access}</Text>
-                            </View>
-                        </View>
-                        {/* SHARED SELECTOR */}
-                        <View style={styles.iconView}>
-                            <View>
-                                {!shared && <Pressable onPress={() => setShared(!shared)}>
-                                    <Icon name={"people-outline"} style={styles.icon} size={30} />
-                                </Pressable>}
-                                {shared && <Pressable onPress={() => setShared(!shared)}>
-                                    <Icon name={"people"} style={styles.icon} size={30} />
-                                </Pressable>}
-                            </View>
-                            <View style={styles.iconLabel}>
-                                <Text style={{ textAlign: "center", textAlignVertical: "center" }}>{shared ? "shared" : ""}</Text>
-                            </View>
-                        </View>
-                        {/* DROPDOWN */}
+                        <AccessSelector styles={styles} setAccess={setAccess} access={access} />
+                        <SharedSelector friends={friends} setFriends={setFriends} setUserSearch={setUserSearch} setAcData={setAcData} styles={styles} shared={shared} setShared={setShared} />
                         <Dropdown
                             data={ColorDropDownOptions}
                             value={color}
@@ -122,33 +84,26 @@ export default function AddWallModal({ isVisible, onClose }) {
                         />
                     </View>
                 </View>
-                {/* SHARED USER SET */}
                 {shared &&
                     <View style={styles.iconView}>
                         <View style={styles.lineBreak}></View>
                         <Text>{'Add up to 5 friends'}</Text>
-                        <View style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
-                            <TextInput value={userSearch}
-                                onChangeText={setUserSearch}
-                                placeholder="Search your friends' usernames" />
-                            <Pressable onPress={() => addUser()}>
-                                <Icon name={"person-add"} size={25} />
-                            </Pressable>
-                        </View>
-                        {userList.length > 0 && <View>
-                            {userList.map((user) => {
-                                return (<View style={{ display: 'flex', flexDirection: 'row', gap: 10 }} key={user.username}>
-                                    <Text>{user.username}</Text>
-                                    <Pressable onPress={() => removeUser(user.username)}>
-                                        <Icon name={'person-remove'} size={18} />
-                                    </Pressable>
-                                </View>)
-                            })}
-                        </View>}
+                        <UserSearch errors={errors} friends={friends} setAcData={setAcData} acData={acData} userSearch={userSearch} setUserSearch={setUserSearch} userList={userList} setUserList={setUserList} setErrors={setErrors} />
+                        <UsersList setErrors={setErrors} friends={friends} userList={userList} setUserList={setUserList} />
                     </View>}
-                    {/* BUTTONS */}
                 <View style={styles.buttonView}>
-                    <BasicRoundButton onPress={onClose} icon={"close"} />
+                    <BasicRoundButton onPress={() => {
+                        onClose()
+                        setName("")
+                        setAccess("public")
+                        setColor(null)
+                        setErrors({})
+                        setShared(false)
+                        setUserList([])
+                        setUserSearch("")
+                        setAcData([])
+                    }}
+                        icon={"close"} />
                     <BasicRoundButton onPress={() => createWall()} icon={"add"} />
                 </View>
             </ScrollView>

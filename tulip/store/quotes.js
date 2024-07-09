@@ -106,6 +106,7 @@ export const quoteReducer = (state = {}, action) => {
             return quoteState
         }
         case LOAD: {
+            quoteState = {}
             action.payload.forEach((quote) => {
                 quoteState[quote.id] = quote
             })

@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Quote" ADD COLUMN "color" TEXT DEFAULT '#F06F3B';

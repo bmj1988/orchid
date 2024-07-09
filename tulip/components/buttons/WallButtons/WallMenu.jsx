@@ -1,12 +1,21 @@
 import { StatusBar, StyleSheet, View } from "react-native"
 import MenuItem from "../MenuItem"
 import { tulipColors } from "@/constants/Colors"
+import { thunkDeleteWall } from "@/store/wall"
+import { useRouter } from "expo-router"
+import { useDispatch } from "react-redux"
 
-const WallMenu = ({ setVisible }) => {
+const WallMenu = ({ setVisible, wallId }) => {
+    const router = useRouter()
+    const dispatch = useDispatch()
+    const deleteWall = async () => {
+        dispatch(thunkDeleteWall(wallId)).then(() => router.replace('(tabs)'))
+    }
+
     return (
         <View style={styles.container}>
             <MenuItem text={'Edit Wall'} onPress={() => console.log('click edit')} position={'top'} />
-            <MenuItem text={'Delete Wall'} onPress={() => console.log('click delete')} position={'center'} />
+            <MenuItem text={'Delete Wall'} onPress={() => deleteWall()} position={'center'} />
             <MenuItem text={'close'} onPress={() => setVisible()} position={'bottom'} />
         </View>
     )

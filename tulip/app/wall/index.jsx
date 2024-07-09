@@ -23,19 +23,22 @@ const Wall = () => {
     }, [wallId])
     const wall = useSelector((state) => state.walls[wallId])
     const quotes = useSelector(quotesArray)
+    console.log('WALL INFO', wall)
+
+    const shared = wall.group.length ? true : false
 
     return (
         <View style={styles.wallContainer}>
             <View style={styles.menuButton}>
                 <HorizontalEllipsis onPress={() => setMenuVisible(!menuVisible)} />
-                {menuVisible && <WallMenu setVisible={() => (setMenuVisible(!menuVisible))} />}
+                {menuVisible && <WallMenu setVisible={() => (setMenuVisible(!menuVisible))} wallId={wallId} />}
 
             </View>
             <Text style={styles.wallName}>{wall.name.toUpperCase()}</Text>
             <ScrollView contentContainerStyle={styles.scroller}>
                 {quotes && quotes.map((quote) => {
                     return (
-                        <WallIconQuote quote={{...quote, wallId: Number(wallId)}} key={quote.id} />
+                        <WallIconQuote quote={{ ...quote, wallId: Number(wallId) }} key={quote.id} />
                     )
                 })}
             </ScrollView>

@@ -39,13 +39,20 @@ router.get('/:id', requireAuth, async (req, res) => {
                 select: {
                     content: true,
                     author: true,
-                    id: true
+                    id: true,
+                    color: true
                 }
             },
             user: {
                 select: {
                     id: true,
                     name: true,
+                }
+            },
+            group: {
+                select: {
+                    id: true,
+                    username: true,
                 }
             },
             _count: {
@@ -60,24 +67,34 @@ router.get('/:id', requireAuth, async (req, res) => {
 // CREATE NEW WALL
 
 router.post('/new', requireAuth, async (req, res, next) => {
-    const { name, access, quote, userList } = req.body
-    const userId = parseInt(req.user.id)
+    const { name, access, quote, color, usersArray } = req.body
+    const userId = req.user.id
     let newWall;
     if (!quote) {
         newWall = {
             name,
             userId,
             access,
+            color,
+            group: {
+                connect: usersArray,
+            }
         }
     }
     else {
         newWall = {
             name,
             userId,
+            access,
+            color,
+            group: {
+                connect: userList,
+            },
             quotes: {
                 create: {
                     content: quote.content,
                     author: quote.author,
+                    userId: req.user.id
                 }
             }
         }

@@ -10,6 +10,8 @@ async function main() {
             email: 'demo@orchid.io',
             name: 'demo user',
             hashedPassword: bcrypt.hashSync('password'),
+            username: 'demo1',
+            img: 'https://heapmobile.s3.amazonaws.com/1714088349605.jpg',
             walls: {
                 create: {
                     name: 'Demo Wall',
@@ -33,6 +35,8 @@ async function main() {
         create: {
             email: "demo2@orchid.io",
             name: "Second Demo",
+            username: 'demo2',
+            img: 'https://heapmobile.s3.amazonaws.com/1714088349654.jpg',
             hashedPassword: bcrypt.hashSync('password'),
             walls: {
                 create: {
@@ -57,6 +61,8 @@ async function main() {
         create: {
             email: "demo3@orchid.io",
             name: "Third Demo",
+            username: 'demo3',
+            img: 'https://heapmobile.s3.amazonaws.com/1714088349659.jpg',
             hashedPassword: bcrypt.hashSync('password'),
             walls: {
                 create: {

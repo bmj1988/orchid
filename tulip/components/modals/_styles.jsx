@@ -109,11 +109,20 @@ export default styles = StyleSheet.create({
         marginBottom: 20,
         marginTop: 20
     },
-    // autocompleteContainer: {
-    //     position: 'absolute',
-    //     flex: 1,
-    //     zIndex: 1,
-    //     right: 1,
-    //     width: 100,
-    // }
+    autocompleteContainer: {
+        position: 'absolute',
+        flex: 1,
+        zIndex: 1,
+        right: 1,
+        width: 150,
+        borderWidth: 1,
+        borderColor: tulipColors.tulipBlack,
+        backgroundColor: tulipColors.tulipBlue,
+        padding: 2,
+        borderRadius: 5
+
+    },
+    borders: {
+
+    }
 })

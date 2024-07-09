@@ -7,8 +7,7 @@ const URL = process.env.EXPO_PUBLIC_LOCAL_TUNNEL
 
 const WALLS = 'WALLS/'
 const WALL_DETAILS = 'WALLS/DETAILS'
-const EDIT_QUOTE = 'quotes/EDIT'
-const QUOTE_DELETE = 'quote/DEL'
+const DEL_WALL = "WALLS/DELETE"
 
 /// ACTION CREATORS
 
@@ -30,26 +29,15 @@ const wallDetails = (payload) => {
     )
 }
 
-const deleteQuote = (payload) => {
+const deleteWall = (payload) => {
     return (
         {
-            type: QUOTE_DELETE,
+            type: DEL_WALL,
             payload
         }
     )
 }
 
-//  if we normalize the quote data we will need this and it will be slightly more
-// efficient. for show model this will work completely fine
-
-// const editQuote = (payload) => {
-//     return (
-//         {
-//             type: EDIT_QUOTE,
-//             payload
-//         }
-//     )
-// }
 
 /// THUNKS
 
@@ -104,6 +92,22 @@ export const thunkCreateWall = (wallData) => async (dispatch) => {
     }
 }
 
+export const thunkDeleteWall = (id) => async (dispatch) => {
+    try {
+        const response = await csrfFetch(`${URL}/api/walls/${id}`, {
+            method: 'DELETE'
+        })
+        if (response.ok) {
+            // await dispatch(deleteWall(id))
+            return
+        }
+    }
+    catch (e) {
+        console.log(e)
+        const err = await e.json()
+        return err
+    }
+}
 
 /// SELECTORS
 
@@ -126,6 +130,10 @@ export const wallReducer = (state = {}, action) => {
         case WALL_DETAILS: {
             wallState[action.payload.id] = action.payload
             return wallState;
+        }
+        case DEL_WALL: {
+            delete wallState[action.payload]
+            return wallState
         }
         default: {
             return wallState;

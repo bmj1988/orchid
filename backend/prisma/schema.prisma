@@ -14,27 +14,28 @@ model User {
   id             Int       @id @default(autoincrement())
   email          String    @unique
   name           String?
-  username       String?
+  username       String?   @unique
   hashedPassword String
   preferences    Int?
   img            String?
-  walls          Wall[]
+  walls          Wall[]    @relation("walls")
   comments       Comment[]
   likes          Like[]
   quotes         Quote[]
   followedBy     Follows[] @relation("followedBy")
   following      Follows[] @relation("following")
-  groups         Group[]
+  groups         Wall[]    @relation("groups")
 }
 
 model Wall {
   id     Int     @id @default(autoincrement())
   access String  @default("public")
   name   String
-  user   User    @relation(fields: [userId], references: [id])
+  user   User    @relation("walls", fields: [userId], references: [id])
   userId Int
-  group  Group?
+  group  User[]  @relation("groups")
   quotes Quote[]
+  color  String? @default("#F06F3B")
 }
 
 model Quote {
@@ -47,6 +48,7 @@ model Quote {
   userId    Int
   postedOn  DateTime  @default(now())
   updatedOn DateTime  @default(now())
+  color     String?   @default("#F06F3B")
   Comment   Comment[]
   likes     Like[]
 }
@@ -78,11 +80,4 @@ model Follows {
   followingId  Int
 
   @@id([followingId, followedById])
-}
-
-model Group {
-  id     Int    @id @default(autoincrement())
-  users  User[]
-  wall   Wall   @relation(fields: [wallId], references: [id])
-  wallId Int    @unique
 }

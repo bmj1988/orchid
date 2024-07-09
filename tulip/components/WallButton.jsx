@@ -7,7 +7,7 @@ import { StyleSheet, View, Text, Button, TouchableOpacity } from "react-native"
 const WallButton = ({ wall }) => {
 
     return (
-        <View style={[styles.wallView, { backgroundColor: tulipColors.tulipOrange }]}>
+        <View style={[styles.wallView, { backgroundColor: wall.color }]}>
             <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/wall', params: { wallId: wall.id } })}>
                 <Text style={styles.text}>
                     {wall.name}

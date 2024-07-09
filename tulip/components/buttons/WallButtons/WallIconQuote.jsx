@@ -2,7 +2,6 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import { tulipColors } from '@/constants/Colors'
 import { StyleSheet, View, Text, Pressable } from 'react-native'
 import { useState } from 'react'
-import QuoteMenu from '@/components/buttons/WallButtons/QuoteMenu'
 import EditQuote from '@/components/modals/EditQuoteModal'
 
 const WallIconQuote = ({ quote }) => {
