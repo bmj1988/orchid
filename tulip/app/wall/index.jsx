@@ -10,6 +10,7 @@ import WallIconQuote from "@/components/buttons/WallButtons/WallIconQuote";
 import HorizontalEllipsis from "@/components/buttons/HorizontalEllipsis";
 import WallMenu from "@/components/buttons/WallButtons/WallMenu";
 import { quotesArray } from "@/store/quotes";
+import AddUserButton from "@/components/buttons/WallButtons/AddUser"
 
 
 const Wall = () => {
@@ -25,14 +26,16 @@ const Wall = () => {
     const quotes = useSelector(quotesArray)
     console.log('WALL INFO', wall)
 
-    const shared = wall.group.length ? true : false
+    const shared = wall.group && wall.group.length ? true : false
 
     return (
         <View style={styles.wallContainer}>
-            <View style={styles.menuButton}>
-                <HorizontalEllipsis onPress={() => setMenuVisible(!menuVisible)} />
-                {menuVisible && <WallMenu setVisible={() => (setMenuVisible(!menuVisible))} wallId={wallId} />}
-
+            <View style={shared ? { display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' , paddingRight: 10} : ""}>
+                <View style={styles.menuButton}>
+                    <HorizontalEllipsis onPress={() => setMenuVisible(!menuVisible)} />
+                    {menuVisible && <WallMenu setVisible={() => (setMenuVisible(!menuVisible))} wallId={wallId} />}
+                </View>
+                {shared && <AddUserButton onPress={() => console.log("add user")} />}
             </View>
             <Text style={styles.wallName}>{wall.name.toUpperCase()}</Text>
             <ScrollView contentContainerStyle={styles.scroller}>

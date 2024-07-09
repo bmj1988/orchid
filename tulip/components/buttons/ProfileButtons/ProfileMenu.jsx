@@ -5,7 +5,7 @@ import { tulipColors } from "@/constants/Colors"
 const ProfileMenu = ({ setVisible }) => {
     return (
         <View style={styles.container}>
-            <MenuItem text={'Edit Bio'} onPress={() => console.log('click edit')} position={'top'} />
+            <MenuItem text={'Edit Profile'} onPress={() => console.log('click edit')} position={'top'} />
             <MenuItem text={'Delete Account'} onPress={() => console.log('click delete')} position={'center'} />
             <MenuItem text={'Close Menu'} onPress={() => setVisible()} position={'bottom'} />
         </View>

@@ -14,15 +14,15 @@ export default function TabTwoScreen() {
   const user = useSelector((state) => state.session.user)
   const [menuVisible, setMenuVisible] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
-
+  console.log(user)
   return (
     <View style={styles.titleContainer}>
       <ProfileHeader showMenu={() => setMenuVisible(!menuVisible)} />
       {menuVisible && <ProfileMenu setVisible={() => setMenuVisible()} />}
       <View style={styles.imageContainer}>
-        <Image source={user.img || require('../../assets/images/HeadshotBlueBackground.jpg')} style={styles.image} />
+        <Image source={{uri: user.img}} style={styles.image} />
       </View>
-      <Text style={styles.profileName}>{`@` + user.name}</Text>
+      <Text style={styles.profileName}>{`@` + user.username}</Text>
       <View style={styles.divider}></View>
       <ScrollView contentContainerStyle={styles.wallScroller}>
         {walls.length > 0 && walls.map((wall) => {
