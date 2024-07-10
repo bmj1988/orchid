@@ -22,6 +22,7 @@ export default function EditQuote({ isVisible, onClose, quote }) {
         if (Object.values(errors).length) return
         const editedQuote = {
             id: quote.id,
+            color,
             author,
             content,
             wallId: quote.wallId
@@ -53,27 +54,26 @@ export default function EditQuote({ isVisible, onClose, quote }) {
                         <Text style={styles.text}>{"Quote"}</Text>
                         <TextInput multiline={true} value={content} style={styles.inputs} onChangeText={setContent} numberOfLines={4}></TextInput>
                     </View>
-                    <View style={styles.textView}>
-                        <Text style={styles.text}>{"Color"}</Text>
-                        <Dropdown
-                            data={ColorDropDownOptions}
-                            value={color}
-                            style={[styles.dropdown, { backgroundColor: color }]}
-                            placeholderStyle={styles.placeholderStyle}
-                            inputSearchStyle={styles.inputSearchStyle}
-                            selectedTextStyle={styles.selectedTextStyle}
-                            containerStyle={styles.ddContainer}
-                            activeColor={color}
-                            onFocus={() => setDropdownFocus(true)}
-                            maxHeight={300}
-                            labelField={'label'}
-                            valueField={'value'}
-                            onChange={item => {
-                                setColor(item.value);
-                                setDropdownFocus(false)
-                            }}
-                        />
-                    </View>
+
+                    <Dropdown
+                        data={ColorDropDownOptions}
+                        value={color}
+                        style={[styles.dropdown, { backgroundColor: color }]}
+                        placeholderStyle={styles.placeholderStyle}
+                        inputSearchStyle={styles.inputSearchStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        containerStyle={styles.ddContainer}
+                        activeColor={color}
+                        placeholder={"Color"}
+                        onFocus={() => setDropdownFocus(true)}
+                        maxHeight={300}
+                        labelField={'label'}
+                        valueField={'value'}
+                        onChange={item => {
+                            setColor(item.value);
+                            setDropdownFocus(false)
+                        }}
+                    />
                 </View>
                 <View style={styles.buttonView}>
                     <BasicRoundButton onPress={onClose} icon={"close"} />

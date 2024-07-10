@@ -120,9 +120,19 @@ export default styles = StyleSheet.create({
         backgroundColor: tulipColors.tulipBlue,
         padding: 2,
         borderRadius: 5
-
     },
-    borders: {
-
+    addUserContainer: {
+        position: 'absolute',
+        zIndex: 1,
+        height: 175,
+        width: "fit-content",
+        borderWidth: 1,
+        borderColor: tulipColors.tulipBlack,
+        padding: 10,
+        justifyContent: "center",
+        alignItems: "center",
+        left: 75,
+        borderRadius: 5,
+        backgroundColor: tulipColors.tulipWhite
     }
 })

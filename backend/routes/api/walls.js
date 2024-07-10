@@ -11,7 +11,7 @@ router.get('/', requireAuth, async (req, res, next) => {
     const user = req.user
     const walls = await prisma.wall.findMany({
         where: {
-            userId: user.id
+            OR: [{ userId: user.id }, { group: { some: { id: user.id } } }]
         },
         include: {
             _count: {
@@ -114,14 +114,59 @@ router.post('/new', requireAuth, async (req, res, next) => {
 
 router.put('/:id', requireAuth, async (req, res, next) => {
     const id = parseInt(req.params.id)
-    const data = req.body
+    const { name, access, quote, color, userId } = req.body
+    let data;
+    if (userId) {
+        data = {
+            name,
+            access,
+            quote,
+            color,
+            group: {
+                connect: { id: userId }
+            }
+        }
+    }
+    else {
+        data = {
+            name,
+            access,
+            quote,
+            color,
+        }
+    }
     try {
         const updateWall = await prisma.wall.update({
             where: {
                 id,
                 userId: req.user.id
-            }, data
-
+            },
+            data,
+            include: {
+                quotes: {
+                    select: {
+                        content: true,
+                        author: true,
+                        id: true,
+                        color: true
+                    }
+                },
+                user: {
+                    select: {
+                        id: true,
+                        name: true,
+                    }
+                },
+                group: {
+                    select: {
+                        id: true,
+                        username: true,
+                    }
+                },
+                _count: {
+                    select: { quotes: true },
+                }
+            }
         })
         return res.status(201).json(updateWall)
 

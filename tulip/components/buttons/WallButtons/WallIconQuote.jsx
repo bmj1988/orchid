@@ -11,7 +11,7 @@ const WallIconQuote = ({ quote }) => {
     return (
         <>
             <Pressable onPress={() => console.log('tester')} onLongPress={() => setModalVisible(true)}>
-                <Icon name="sticky-note" size={180} color={tulipColors.tulipOrange} />
+                <Icon name="sticky-note" size={180} color={quote.color} />
                 <View style={styles.textView}>
                     <Text numberOfLines={4} style={[styles.text, { fontFamily: 'PlayfairDisplay' }]}>{quote.content}</Text>
                     <Text style={[styles.text, { fontFamily: 'Allison', fontSize: 25 }]}>

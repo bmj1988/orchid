@@ -5,7 +5,7 @@ import { thunkDeleteWall } from "@/store/wall"
 import { useRouter } from "expo-router"
 import { useDispatch } from "react-redux"
 
-const WallMenu = ({ setVisible, wallId }) => {
+const WallMenu = ({ setVisible, wallId, editModal }) => {
     const router = useRouter()
     const dispatch = useDispatch()
     const deleteWall = async () => {
@@ -14,9 +14,12 @@ const WallMenu = ({ setVisible, wallId }) => {
 
     return (
         <View style={styles.container}>
-            <MenuItem text={'Edit Wall'} onPress={() => console.log('click edit')} position={'top'} />
+            <MenuItem text={'Edit Wall'} onPress={() => {
+                setVisible()
+                editModal()
+                }} position={'top'} />
             <MenuItem text={'Delete Wall'} onPress={() => deleteWall()} position={'center'} />
-            <MenuItem text={'close'} onPress={() => setVisible()} position={'bottom'} />
+            <MenuItem text={'Close'} onPress={() => setVisible()} position={'bottom'} />
         </View>
     )
 }
@@ -31,6 +34,7 @@ const styles = StyleSheet.create({
         top: StatusBar.currentHeight,
         zIndex: 2,
         padding: 5,
+        width: 120,
         left: 10
     },
 })

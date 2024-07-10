@@ -2,57 +2,41 @@ import { useDispatch } from 'react-redux'
 import { ColorDropDownOptions } from "@/constants/Colors";
 import styles from '../_styles'
 import { useState } from 'react';
-import { thunkCreateWall } from '../../../store/wall';
+import { thunkEditWall } from '@/store/wall';
 import { Modal, ScrollView, Text, View } from 'react-native';
 import { Dropdown } from "react-native-element-dropdown";
 import { BasicRoundButton } from '../../buttons/BasicRoundButton';
-import NameInput from './NameInput';
-import AccessSelector from './AccessSelector'
-import SharedSelector from './SharedSelector';
-import UsersList from './UsersList';
-import UserSearch from './UserSearch';
+import NameInput from '../AddWallModal/NameInput';
+import AccessSelector from '../AddWallModal/AccessSelector'
 
-export default function AddWallModal({ isVisible, onClose }) {
+const EditWallModal = ({ wall, isVisible, onClose }) => {
     const dispatch = useDispatch();
-    const [name, setName] = useState("")
-    const [shared, setShared] = useState(false)
-    const [userList, setUserList] = useState([])
-    const [color, setColor] = useState(null)
-    const [access, setAccess] = useState("public")
+    const [name, setName] = useState(wall.name)
+    const [color, setColor] = useState(wall.color)
+    const [access, setAccess] = useState(wall.access)
     const [errors, setErrors] = useState({})
-    const [userSearch, setUserSearch] = useState("")
     const [dropdownFocus, setDropdownFocus] = useState(false)
-    const [acData, setAcData] = useState([])
-    const [friends, setFriends] = useState([])
 
-    const createWall = async () => {
-        const usersArray = []
-        for (let user of userList) {
-            usersArray.push({ id: user.id })
-        }
 
-        console.log(usersArray)
+    const editWall = async () => {
         const newWall = {
             access,
             name,
-            usersArray,
-            color
+            color,
+            wallId: wall.id
+
         }
-        await dispatch(thunkCreateWall(newWall))
+        await dispatch(thunkEditWall(newWall))
         setName("")
         setAccess("public")
         setColor(null)
         setErrors({})
-        setShared(false)
-        setUserList([])
-        setUserSearch("")
-        setAcData([])
         onClose()
     }
 
     return (
         <Modal animationType='slide' transparent={true} visible={isVisible}>
-            <ScrollView contentContainerStyle={styles.newWallModalContainer} keyboardShouldPersistTaps="always">
+            <ScrollView contentContainerStyle={styles.modalContainer} keyboardShouldPersistTaps="always">
                 <View>
                     {Object.values(errors).length > 0 && Object.values(errors).map((error) => {
                         return (
@@ -62,7 +46,6 @@ export default function AddWallModal({ isVisible, onClose }) {
                     <NameInput styles={styles} name={name} setName={setName} />
                     <View style={styles.iconRow}>
                         <AccessSelector styles={styles} setAccess={setAccess} access={access} />
-                        <SharedSelector friends={friends} setFriends={setFriends} setUserSearch={setUserSearch} setAcData={setAcData} styles={styles} shared={shared} setShared={setShared} />
                         <Dropdown
                             data={ColorDropDownOptions}
                             value={color}
@@ -84,29 +67,20 @@ export default function AddWallModal({ isVisible, onClose }) {
                         />
                     </View>
                 </View>
-                {shared &&
-                    <View style={styles.iconView}>
-                        <View style={styles.lineBreak}></View>
-                        <Text>{'Add up to 5 friends'}</Text>
-                        <UserSearch errors={errors} friends={friends} setAcData={setAcData} acData={acData} userSearch={userSearch} setUserSearch={setUserSearch} userList={userList} setUserList={setUserList} setErrors={setErrors} />
-                        <UsersList setErrors={setErrors} friends={friends} userList={userList} setUserList={setUserList} />
-                    </View>}
                 <View style={styles.buttonView}>
                     <BasicRoundButton onPress={() => {
-                        onClose()
                         setName("")
                         setAccess("public")
                         setColor(null)
                         setErrors({})
-                        setShared(false)
-                        setUserList([])
-                        setUserSearch("")
-                        setAcData([])
+                        onClose()
                     }}
                         icon={"close"} />
-                    <BasicRoundButton onPress={() => createWall()} icon={"add"} />
+                    <BasicRoundButton onPress={() => editWall()} icon={"save-outline"} />
                 </View>
             </ScrollView>
         </Modal>
     )
 }
+
+export default EditWallModal;

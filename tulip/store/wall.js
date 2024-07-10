@@ -109,6 +109,27 @@ export const thunkDeleteWall = (id) => async (dispatch) => {
     }
 }
 
+export const thunkEditWall = (info) => async (dispatch) => {
+    try {
+        const response = await csrfFetch(`${URL}/api/walls/${info.wallId}`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(info)
+        })
+        if (response.ok) {
+            const wall = await response.json()
+            await dispatch(wallDetails(wall))
+            return true
+        }
+    }
+    catch (e) {
+        console.error(e)
+        return false
+    }
+}
+
 /// SELECTORS
 
 export const wallsArray = createSelector((state) => state.walls, (walls) => {

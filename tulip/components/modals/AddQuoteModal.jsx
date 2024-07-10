@@ -3,21 +3,27 @@ import { Modal, View, Text, TextInput } from "react-native";
 import { BasicRoundButton } from "../buttons/BasicRoundButton";
 import { useDispatch } from "react-redux";
 import { thunkAddQuote } from "@/store/quotes";
+import { Dropdown } from "react-native-element-dropdown";
 import styles from './_styles'
+import { ColorDropDownOptions } from "@/constants/Colors";
+
 
 export default function AddQuote({ isVisible, onClose, wallId }) {
     const dispatch = useDispatch();
     const [author, setAuthor] = useState('')
-    const [quote, setQuote] = useState('')
+    const [content, setContent] = useState('')
     const [errors, setErrors] = useState({})
+    const [color, setColor] = useState(null)
+    const [dropdownFocus, setDropdownFocus] = useState(false)
 
     const AddQuoteToWall = async () => {
-        if (!author) setErrors({...errors, Author: "No Author Provided"})
-        if (!quote) setErrors({...errors, Quote: "No Quote Provided"})
+        if (!author) setErrors({ ...errors, Author: "No Author Provided" })
+        if (!content) setErrors({ ...errors, Quote: "No Quote Provided" })
         if (Object.values(errors).length) return
         const newQuote = {
             author,
-            content: quote,
+            content,
+            color,
             wallId: Number(wallId)
         }
 
@@ -40,8 +46,28 @@ export default function AddQuote({ isVisible, onClose, wallId }) {
                     </View>
                     <View style={styles.textView}>
                         <Text style={styles.text}>{"Quote"}</Text>
-                        <TextInput multiline={true} style={styles.inputs} onChangeText={setQuote}></TextInput>
+                        <TextInput multiline={true} style={styles.inputs} onChangeText={setContent}></TextInput>
                     </View>
+
+                    <Dropdown
+                        data={ColorDropDownOptions}
+                        value={color}
+                        style={[styles.dropdown, { backgroundColor: color }]}
+                        placeholderStyle={styles.placeholderStyle}
+                        inputSearchStyle={styles.inputSearchStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        containerStyle={styles.ddContainer}
+                        activeColor={color}
+                        onFocus={() => setDropdownFocus(true)}
+                        placeholder={"Color"}
+                        maxHeight={300}
+                        labelField={'label'}
+                        valueField={'value'}
+                        onChange={item => {
+                            setColor(item.value);
+                            setDropdownFocus(false)
+                        }}
+                    />
                 </View>
                 <View style={styles.buttonView}>
                     <BasicRoundButton onPress={onClose} icon={"close"} />

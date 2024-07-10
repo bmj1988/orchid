@@ -11,6 +11,8 @@ import HorizontalEllipsis from "@/components/buttons/HorizontalEllipsis";
 import WallMenu from "@/components/buttons/WallButtons/WallMenu";
 import { quotesArray } from "@/store/quotes";
 import AddUserButton from "@/components/buttons/WallButtons/AddUser"
+import AddUserModal from "@/components/modals/AddUserPopup/AddUserModal"
+import EditWallModal from "@/components/modals/EditWallModal"
 
 
 const Wall = () => {
@@ -18,26 +20,31 @@ const Wall = () => {
     const { wallId } = useLocalSearchParams()
     const [modalVisible, setModalVisible] = useState(false)
     const [menuVisible, setMenuVisible] = useState(false)
+    const [addUserVisible, setAddUserVisible] = useState(false)
+    const [editWallModal, setEditWallModal] = useState(false)
 
     useEffect(() => {
         dispatch(thunkWallById(wallId))
     }, [wallId])
     const wall = useSelector((state) => state.walls[wallId])
     const quotes = useSelector(quotesArray)
-    console.log('WALL INFO', wall)
+    console.log('WALL INFO', wall, quotes)
 
     const shared = wall.group && wall.group.length ? true : false
 
     return (
         <View style={styles.wallContainer}>
-            <View style={shared ? { display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' , paddingRight: 10} : ""}>
+            <View style={shared ? { display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingRight: 10 } : ""}>
                 <View style={styles.menuButton}>
                     <HorizontalEllipsis onPress={() => setMenuVisible(!menuVisible)} />
-                    {menuVisible && <WallMenu setVisible={() => (setMenuVisible(!menuVisible))} wallId={wallId} />}
+                    {menuVisible && <WallMenu setVisible={() => (setMenuVisible(!menuVisible))} wallId={wallId} editModal={() => setEditWallModal(true)} />}
                 </View>
-                {shared && <AddUserButton onPress={() => console.log("add user")} />}
+                {shared && <AddUserButton onPress={() => setAddUserVisible(true)} />}
             </View>
             <Text style={styles.wallName}>{wall.name.toUpperCase()}</Text>
+            {addUserVisible && <View>
+                <AddUserModal wallName={wall.name} wallId={wall.id} onClose={() => setAddUserVisible(false)} />
+            </View>}
             <ScrollView contentContainerStyle={styles.scroller}>
                 {quotes && quotes.map((quote) => {
                     return (
@@ -46,6 +53,7 @@ const Wall = () => {
                 })}
             </ScrollView>
             <AddQuoteModal isVisible={modalVisible} onClose={() => setModalVisible(false)} wallId={wallId} />
+            <EditWallModal wall={wall} isVisible={editWallModal} onClose={() => setEditWallModal(false)}/>
             <BasicRoundButton onPress={() => setModalVisible(true)} icon={"add"} />
         </View>
     )
