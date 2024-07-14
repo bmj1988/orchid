@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native"
 // in the future this will take the as of yet unmigrated quote.caption as a prop
 // Profile image will go in on left side in small border rad bubble
 
-const QuoteDetailsInFeed = ({ username }) => {
+const QuoteDetailsInFeed = ({ username, caption }) => {
 
     return (
         <View style={styles.container}>
@@ -11,7 +11,7 @@ const QuoteDetailsInFeed = ({ username }) => {
                 {'@' + username}
             </Text>
             <Text numberOfLines={1}>
-                {"[caption inserted here]"}
+                {caption}
             </Text>
         </View>
     )

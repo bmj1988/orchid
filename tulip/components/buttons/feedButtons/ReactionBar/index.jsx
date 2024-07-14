@@ -6,7 +6,7 @@ import { View, StyleSheet } from 'react-native'
 import { useSelector } from 'react-redux'
 
 
-const FeedResponseBar = ({ quote }) => {
+const FeedResponseBar = ({ quote, leaveComment }) => {
     const user = useSelector((state) => state.session.user)
     const liked = () => {
         if (quote.likes.includes(user.id)) return true
@@ -14,10 +14,10 @@ const FeedResponseBar = ({ quote }) => {
     }
     return (
         <View style={styles.container}>
-            <LikeButton liked={liked() ? "heart" : "heart-outline"} quoteId={quote.id}/>
+            <LikeButton liked={liked() ? "heart" : "heart-outline"} quoteId={quote.id} />
             <SendButton />
             <BookmarkButton />
-            <CommentButton />
+            <CommentButton leaveComment={leaveComment} />
         </View>
     )
 }

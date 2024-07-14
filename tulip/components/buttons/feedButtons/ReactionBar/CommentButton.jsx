@@ -2,14 +2,10 @@ import { Pressable } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { tulipColors } from '@/constants/Colors'
 
-const CommentButton = () => {
-
-    const onPress = () => {
-        console.log('Clicked comment button')
-    }
+const CommentButton = ({ leaveComment }) => {
 
     return (
-        <Pressable onPress={() => onPress()}>
+        <Pressable onPress={() => leaveComment()}>
             <Icon size={30} name="chatbubble" color={tulipColors.tulipLightOrange} />
         </Pressable>
 

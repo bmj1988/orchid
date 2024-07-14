@@ -3,7 +3,7 @@ import Comment from './Comment'
 
 const Comments = ({ comments }) => {
 
-    const comments = useSelector((state) => state.feed[quoteId].comments)
+    // const comments = useSelector((state) => state.feed[quoteId].comments)
 
     return (
         <View>

@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { tulipColors } from '@/constants/Colors'
 import { useState } from 'react'
 import Comments from '../buttons/feedButtons/Comments'

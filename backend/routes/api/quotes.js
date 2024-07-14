@@ -12,6 +12,11 @@ router.get('/feed', async (req, res, next) => {
                 postedOn: 'desc'
             },
             include: {
+                user: {
+                    select: {
+                        username: true,
+                    }
+                },
                 likes: {
                     select: {
                         userId: true,
