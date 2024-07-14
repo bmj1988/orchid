@@ -1,11 +1,26 @@
-import { StyleSheet, Text } from 'react-native'
+import { Pressable, StyleSheet, Text } from 'react-native'
 import { tulipColors } from '@/constants/Colors'
+import { useState } from 'react'
+import Comments from '../buttons/feedButtons/Comments'
 
-const ViewCommentsPress = () => {
+const ViewCommentsPress = ({ comments }) => {
+
+    const [showComments, setShowComments] = useState(false)
+
     return (
-        <Text>
-            {'View comments'}
-        </Text>
+        <View>
+            {!showComments && <Pressable onPress={() => setShowComments(true)}>
+                <Text>
+                    {'View comments'}
+                </Text>
+            </Pressable>}
+            {showComments && <>
+                <Comments comments={comments}></Comments>
+                <Pressable onPress={() => setShowComments(false)}>
+                    <Text>{'Collapse comments'}</Text>
+                </Pressable>
+            </>}
+        </View>
     )
 }
 

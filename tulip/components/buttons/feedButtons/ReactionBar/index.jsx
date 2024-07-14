@@ -3,12 +3,18 @@ import SendButton from './SendButton'
 import BookmarkButton from './BookmarkButton'
 import CommentButton from './CommentButton'
 import { View, StyleSheet } from 'react-native'
+import { useSelector } from 'react-redux'
 
 
-const FeedResponseBar = () => {
+const FeedResponseBar = ({ quote }) => {
+    const user = useSelector((state) => state.session.user)
+    const liked = () => {
+        if (quote.likes.includes(user.id)) return true
+        else return false
+    }
     return (
         <View style={styles.container}>
-            <LikeButton />
+            <LikeButton liked={liked() ? "heart" : "heart-outline"} quoteId={quote.id}/>
             <SendButton />
             <BookmarkButton />
             <CommentButton />

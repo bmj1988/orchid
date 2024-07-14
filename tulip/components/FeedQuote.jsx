@@ -9,9 +9,9 @@ const FeedQuote = ({ quote }) => {
         <View style={styles.container}>
             <View>
                 <IconQuote quote={quote.content} author={quote.author} />
-                <ResponseBar />
+                <ResponseBar quote={quote} />
                 <QuoteDetails username={"demo"} />
-                <CommentsSection />
+                <CommentsSection comments={quote.comments} />
             </View>
         </View>
     )

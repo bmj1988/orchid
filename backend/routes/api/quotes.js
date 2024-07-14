@@ -10,6 +10,31 @@ router.get('/feed', async (req, res, next) => {
         const feed = await prisma.quote.findMany({
             orderBy: {
                 postedOn: 'desc'
+            },
+            include: {
+                likes: {
+                    select: {
+                        userId: true,
+                    }
+                },
+                comments: {
+                    select: {
+                        user: {
+                            select: {
+                                id: true,
+                                username: true
+                            }
+                        },
+                        content: true
+                    }
+                },
+                _count: {
+                    select: {
+                        likes: true,
+                        comments: true
+                    }
+                }
+
             }
         })
         res.json(feed)

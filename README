@@ -1,18 +1,12 @@
 - IN ORDER
 - tulip - [
-- postman test follows (seed follow, check followedBy/following for both),
-current MUTUALS route returns only the user,
-- write sorting function for the follows for adding "friends" mutual follows to wall,
-- addUser button to shared walls,
-- Edit wall modal,
-- display shared walls in profile page,
 - likes api, like component, orange heart just fills,
-- view quote modal, "zoomed in" look at a single quote, comments visible, specific data, bigger frame, more real estate,
 - comment component,
-- feed api should be refactored to weight following,
-- feed component should be refactored to constantly load more,
 - basic error handling,
-- write api docs,
-- type what can be typed reasonably,
-- ongoing questions: [scrap the gallery?, transparent lower button bar, header search bar]
+- ongoing questions: [Lovely May Script?, scrap the gallery?, transparent lower button bar, header search bar, quote background]
+- PREMIUM [feed api should be refactored to weight following,]
+- PREMIUM [feed component should be refactored to constantly load more,]
+- PREMIUM [view quote modal, "zoomed in" look at a single quote, comments visible, specific data, bigger frame, more real estate],
+- PREMIUM [type what can be typed reasonably],
+- PREMIUM [write api docs,]
 - ]

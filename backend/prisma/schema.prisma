@@ -50,7 +50,7 @@ model Quote {
   updatedOn DateTime  @default(now())
   color     String?   @default("#F06F3B")
   caption   String?
-  Comment   Comment[]
+  comments  Comment[]
   likes     Like[]
 }
 
