@@ -29,9 +29,24 @@ router.post('/:quoteId', requireAuth, async (req, res) => {
     try {
         const comment = await prisma.comment.create({
             data: {
-                quoteId,
-                userId,
-                content
+                content,
+                user: {
+                    connect: {
+                        id: userId
+                    }
+                },
+                quote: {
+                    connect: {
+                        id: quoteId
+                    }
+                }
+            },
+            include: {
+                user: {
+                    select: {
+                        username: true,
+                    }
+                }
             }
         })
         return res.status(201).json(comment)

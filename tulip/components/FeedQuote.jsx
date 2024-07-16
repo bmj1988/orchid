@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import IconQuote from '@/components/buttons/feedButtons/FeedIconQuote'
 import ResponseBar from './buttons/feedButtons/ReactionBar'
 import QuoteDetails from './Feed/QuoteDetails'
 import CommentsSection from './Feed/CommentsSection'
 import { useState } from "react"
+import LeaveComment from "./Feed/LeaveComment"
 
 const FeedQuote = ({ quote }) => {
     console.log("QUOTE", quote)
@@ -12,9 +13,10 @@ const FeedQuote = ({ quote }) => {
         <View style={styles.container}>
             <View>
                 <IconQuote quote={quote.content} author={quote.author} />
-                <ResponseBar quote={quote} leaveComment={() => showLeaveComment(!leaveComment)}/>
+                <ResponseBar quote={quote} leaveComment={() => showLeaveComment(!leaveComment)} />
                 <QuoteDetails username={quote.user.username} caption={quote.caption ? quote.caption : "No caption provided"} />
                 <CommentsSection comments={quote.comments} />
+                {leaveComment && <LeaveComment quoteId={quote.id} onClose={() => showLeaveComment(!leaveComment)} />}
             </View>
         </View>
     )

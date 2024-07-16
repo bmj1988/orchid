@@ -20,7 +20,7 @@ export default function TabTwoScreen() {
       <ProfileHeader showMenu={() => setMenuVisible(!menuVisible)} />
       {menuVisible && <ProfileMenu setVisible={() => setMenuVisible()} />}
       <View style={styles.imageContainer}>
-        <Image source={{uri: user.img}} style={styles.image} />
+        <Image source={{ uri: user.img }} style={styles.image} />
       </View>
       <Text style={styles.profileName}>{`@` + user.username}</Text>
       <View style={styles.divider}></View>

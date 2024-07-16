@@ -30,7 +30,8 @@ router.get('/feed', async (req, res, next) => {
                                 username: true
                             }
                         },
-                        content: true
+                        content: true,
+                        id: true
                     }
                 },
                 _count: {

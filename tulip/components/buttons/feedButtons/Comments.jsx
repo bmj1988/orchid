@@ -9,7 +9,7 @@ const Comments = ({ comments }) => {
         <View>
             {comments.map((comment) => {
                 return (
-                    <Comment comment={comment}></Comment>
+                    <Comment comment={comment} key={comment.id}></Comment>
                 )
             })}
         </View>

@@ -10,14 +10,14 @@ const ViewCommentsPress = ({ comments }) => {
     return (
         <View>
             {!showComments && <Pressable onPress={() => setShowComments(true)}>
-                <Text>
+                <Text style={styles.action}>
                     {'View comments'}
                 </Text>
             </Pressable>}
             {showComments && <>
                 <Comments comments={comments}></Comments>
                 <Pressable onPress={() => setShowComments(false)}>
-                    <Text>{'Collapse comments'}</Text>
+                    <Text style={styles.action}>{'Collapse comments'}</Text>
                 </Pressable>
             </>}
         </View>
@@ -25,7 +25,11 @@ const ViewCommentsPress = ({ comments }) => {
 }
 
 const styles = StyleSheet.create({
-    color: tulipColors.tulipBlack
+    action: {
+        textDecorationColor: tulipColors.tulipBlack,
+        textDecorationStyle: 'solid',
+        textDecorationLine: 'underline'
+    }
 })
 
 export default ViewCommentsPress

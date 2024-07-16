@@ -1,7 +1,7 @@
 import FeedQuote from "@/components/FeedQuote";
 import { ScrollView, StatusBar, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from 'react-redux'
-import { thunkLoadFeed } from "../../store/feed";
+import { feedArray, thunkLoadFeed } from "../../store/feed";
 import { useEffect } from "react";
 import { tulipColors } from "@/constants/Colors";
 import FeedHeader from '@/components/Feed/FeedHeader'
@@ -11,8 +11,7 @@ export default function Feed() {
     useEffect(() => {
         dispatch(thunkLoadFeed())
     }, [])
-    const feed = useSelector((state) => state.feed)
-    console.log(feed)
+    const feed = useSelector(feedArray)
     return (
         <View style={styles.container}>
             <FeedHeader />
@@ -32,6 +31,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: StatusBar.currentHeight,
+        paddingBottom: 50,
         backgroundColor: tulipColors.tulipWhite
     }
 })
