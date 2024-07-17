@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
     await setTokenCookie(res, safeUser);
 
     return res.json({
-        user: safeUser
+        safeUser
     });
 });
 
@@ -37,11 +37,14 @@ router.get('/', (req, res) => {
             email: user.email,
             name: user.name,
             username: user.username,
-            img: user.img
+            img: user.img,
+            access: user.access,
+            bio: user.bio,
+            followedBy: user.followedBy
         };
-        return res.json({
-            user: safeUser
-        });
+        return res.json(
+            safeUser
+        );
     } else return res.json({ user: null });
 });
 
@@ -106,6 +109,33 @@ router.post('/follow/:id', async (req, res, next) => {
     catch (e) {
         console.error(e)
         res.status(404).json({ Error: "Record not found" })
+    }
+})
+
+router.put('/', async (req, res, next) => {
+    const { bio, access } = req.body
+    try {
+        const updatedUser = await prisma.user.update({
+            where: { id: req.user.id },
+            data: {
+                bio,
+                access
+            },
+            select: {
+                id: true,
+                email: true,
+                name: true,
+                img: true,
+                username: true,
+                bio: true,
+                access: true
+            }
+        })
+        return res.json(updatedUser)
+    }
+    catch (e) {
+        console.error(e)
+        return res.json(e)
     }
 })
 

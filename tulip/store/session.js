@@ -91,11 +91,34 @@ export const thunkLogout = () => async (dispatch) => {
     }
 }
 
+export const thunkEditProfile = (profile) => async (dispatch) => {
+    try {
+        const response = await csrfFetch(`${URL}/api/users`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(profile)
+        })
+        if (response.ok) {
+            const user = await response.json()
+            console.log(user)
+            await dispatch(setUser(user))
+            return user
+        }
+    }
+    catch (e) {
+        const err = await e.json()
+        console.error(e, err)
+        return err
+    }
+}
+
 export const sessionReducer = (state = { user: null }, action) => {
     let sessionState = { ...state }
     switch (action.type) {
         case SET_USER: {
-            sessionState.user = { ...action.payload.user }
+            sessionState.user = { ...action.payload }
             return sessionState
         }
 

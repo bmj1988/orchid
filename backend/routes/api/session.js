@@ -8,7 +8,6 @@ const prisma = require('./prisma')
 // Log in
 router.post('/', async (req, res, next) => {
     const { email, password } = req.body;
-    console.log(email, password, "************")
     const user = await prisma.user.findUnique({
         where: {
             email: email
@@ -28,14 +27,15 @@ router.post('/', async (req, res, next) => {
         email: user.email,
         name: user.name,
         img: user.img,
-        username: user.username
+        username: user.username,
+        bio: user.bio,
+        access: user.access,
+        followedBy: user.followedBy
     };
 
     await setTokenCookie(res, safeUser);
 
-    return res.json({
-        user: safeUser
-    });
+    return res.json(safeUser);
 });
 
 // Log out

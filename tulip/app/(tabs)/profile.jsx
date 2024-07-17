@@ -8,21 +8,24 @@ import { useState } from 'react';
 import ProfileMenu from '@/components/buttons/ProfileButtons/ProfileMenu'
 import { BasicRoundButton } from '@/components/buttons/BasicRoundButton';
 import AddWallModal from '@/components/modals/AddWallModal'
+import EditProfileModal from '@/components/modals/EditProfileModal'
 
 export default function TabTwoScreen() {
   const walls = useSelector(wallsArray)
   const user = useSelector((state) => state.session.user)
   const [menuVisible, setMenuVisible] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
-  console.log(user)
+  const [editProfile, setEditProfile] = useState(false)
+
   return (
     <View style={styles.titleContainer}>
       <ProfileHeader showMenu={() => setMenuVisible(!menuVisible)} />
-      {menuVisible && <ProfileMenu setVisible={() => setMenuVisible()} />}
+      {menuVisible && <ProfileMenu setVisible={() => setMenuVisible()} editProfile={() => setEditProfile(true)} />}
       <View style={styles.imageContainer}>
         <Image source={{ uri: user.img }} style={styles.image} />
       </View>
       <Text style={styles.profileName}>{`@` + user.username}</Text>
+      {user.bio && user.bio.length > 0 && <Text style={{color: tulipColors.tulipBlack}}>{user.bio}</Text>}
       <View style={styles.divider}></View>
       <ScrollView contentContainerStyle={styles.wallScroller}>
         {walls.length > 0 && walls.map((wall) => {
@@ -33,6 +36,7 @@ export default function TabTwoScreen() {
       </ScrollView>
       <BasicRoundButton onPress={() => setModalVisible(true)} icon={'add'} />
       <AddWallModal isVisible={modalVisible} onClose={() => setModalVisible(false)} />
+      <EditProfileModal isVisible={editProfile} onClose={() => setEditProfile(false)} userBio={user.bio} userAccess={user.access} />
     </View>
   );
 }
