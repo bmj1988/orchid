@@ -9,6 +9,7 @@ import ProfileMenu from '@/components/buttons/ProfileButtons/ProfileMenu'
 import { BasicRoundButton } from '@/components/buttons/BasicRoundButton';
 import AddWallModal from '@/components/modals/AddWallModal'
 import EditProfileModal from '@/components/modals/EditProfileModal'
+import BioBar from "@/components/buttons/ProfileButtons/BioBar"
 
 export default function TabTwoScreen() {
   const walls = useSelector(wallsArray)
@@ -25,7 +26,7 @@ export default function TabTwoScreen() {
         <Image source={{ uri: user.img }} style={styles.image} />
       </View>
       <Text style={styles.profileName}>{`@` + user.username}</Text>
-      {user.bio && user.bio.length > 0 && <Text style={{color: tulipColors.tulipBlack}}>{user.bio}</Text>}
+      <BioBar follows={user.following} followedBy={user.followedBy} bio={user.bio} />
       <View style={styles.divider}></View>
       <ScrollView contentContainerStyle={styles.wallScroller}>
         {walls.length > 0 && walls.map((wall) => {

@@ -15,6 +15,7 @@ router.get('/feed', async (req, res, next) => {
                 user: {
                     select: {
                         username: true,
+                        id: true
                     }
                 },
                 likes: {

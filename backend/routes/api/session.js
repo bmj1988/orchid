@@ -11,6 +11,14 @@ router.post('/', async (req, res, next) => {
     const user = await prisma.user.findUnique({
         where: {
             email: email
+        },
+        include: {
+            _count: {
+                select: {
+                    followedBy: true,
+                    following: true
+                }
+            }
         }
     });
 
@@ -30,7 +38,8 @@ router.post('/', async (req, res, next) => {
         username: user.username,
         bio: user.bio,
         access: user.access,
-        followedBy: user.followedBy
+        followedBy: user._count.followedBy,
+        following: user._count.following
     };
 
     await setTokenCookie(res, safeUser);

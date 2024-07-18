@@ -5,6 +5,7 @@ import { createLogger } from "redux-logger"
 import { thunk } from "redux-thunk";
 import { feedReducer } from "./feed"
 import { quoteReducer } from "./quotes"
+import { profileReducer } from "./profile"
 
 /// LOCAL TUNNEL URL FOR TESTING
 
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
     session: sessionReducer,
     feed: feedReducer,
     quotes: quoteReducer,
+    profile: profileReducer,
 })
 
 

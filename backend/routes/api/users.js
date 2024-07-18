@@ -40,7 +40,8 @@ router.get('/', (req, res) => {
             img: user.img,
             access: user.access,
             bio: user.bio,
-            followedBy: user.followedBy
+            followedBy: user._count.followedBy,
+            following: user._count.following
         };
         return res.json(
             safeUser
@@ -151,10 +152,58 @@ router.delete('/unfollow/:id', async (req, res, next) => {
                 }
             }
         })
-        res.status(200).json({ Success: true })
+        return res.status(200).json({ Success: true })
     }
     catch (e) {
-        res.status(404).json({ Error: "Record not found" })
+        return res.status(404).json({ Error: "Record not found" })
+    }
+})
+
+router.get('/:id', async (req, res, next) => {
+    const id = Number(req.params.id)
+    try {
+        const user = await prisma.user.findUnique({
+            where: {
+                id
+            },
+            select: {
+                username: true,
+                bio: true,
+                img: true,
+                id: true,
+                followedBy: {
+                    select: {
+                        followingId: true,
+                    }
+                },
+                _count: {
+                    select: {
+                        following: true
+                    }
+                },
+                walls: {
+                    where: {
+                        OR: [
+                            {
+                                access: "public"
+                            },
+                            {
+                                group: {
+                                    some: {
+                                        id: req.user.id
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+        })
+        return res.json(user)
+    }
+    catch (e) {
+        console.error(e)
+        return res.status(404).json({ Error: "User not found" })
     }
 })
 

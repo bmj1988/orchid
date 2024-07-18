@@ -47,6 +47,14 @@ const restoreUser = (req, res, next) => {
             req.user = await prisma.user.findUnique({
                 where: {
                     id
+                },
+                include: {
+                    _count: {
+                        select: {
+                            followedBy: true,
+                            following: true
+                        }
+                    }
                 }
             });
         } catch (e) {
