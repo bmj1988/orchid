@@ -4,16 +4,20 @@ import { useDispatch, useSelector } from 'react-redux'
 import { thunkFollow, thunkUnfollow } from '@/store/profile';
 import { useEffect, useState } from 'react';
 
-export default function ProfileFollowButton({ currentFollower }) {
+export default function ProfileFollowButton() {
     const dispatch = useDispatch();
-    const [follower, setFollower] = useState(currentFollower)
+    const [follower, setFollower] = useState(false)
 
     const user = useSelector((state) => state.profile)
     const viewer = useSelector((state) => state.session.user)
 
     useEffect(() => {
-        setFollower(currentFollower)
-    }, [currentFollower])
+        if (user.followers && user.followers[viewer.id]) {
+            setFollower(true)
+        }
+        else setFollower(false)
+    }, [user])
+
     const press = async () => {
         if (follower) {
             await dispatch(thunkUnfollow(user.id, viewer.id))

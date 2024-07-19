@@ -15,7 +15,7 @@ router.post('/', async (req, res, next) => {
         include: {
             _count: {
                 select: {
-                    followedBy: true,
+                    followers: true,
                     following: true
                 }
             }
@@ -38,7 +38,7 @@ router.post('/', async (req, res, next) => {
         username: user.username,
         bio: user.bio,
         access: user.access,
-        followedBy: user._count.followedBy,
+        followers: user._count.followers,
         following: user._count.following
     };
 

@@ -18,11 +18,11 @@ PRAGMA foreign_keys=on;
 
 -- CreateTable
 CREATE TABLE "Follows" (
-    "followedById" INTEGER NOT NULL,
+    "followerId" INTEGER NOT NULL,
     "followingId" INTEGER NOT NULL,
 
-    PRIMARY KEY ("followingId", "followedById"),
-    CONSTRAINT "Follows_followedById_fkey" FOREIGN KEY ("followedById") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    PRIMARY KEY ("followingId", "followerId"),
+    CONSTRAINT "Follows_followerId_fkey" FOREIGN KEY ("followerId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "Follows_followingId_fkey" FOREIGN KEY ("followingId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 

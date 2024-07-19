@@ -1,11 +1,11 @@
 import { View, Text, StyleSheet } from 'react-native'
 
 
-const FollowsRow = ({ follows, followedBy }) => {
+const FollowsRow = ({ follows, followers }) => {
     return (
         <View style={styles.container}>
             <View style={styles.followView}>
-                <Text style={styles.numbers}>{followedBy}</Text>
+                <Text style={styles.numbers}>{followers}</Text>
                 <Text style={styles.letters}>{"Followers"}</Text>
             </View>
             <View style={styles.followView}>

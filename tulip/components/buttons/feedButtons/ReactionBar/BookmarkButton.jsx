@@ -2,16 +2,11 @@ import { Pressable } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { tulipColors } from '@/constants/Colors'
 
-const BookmarkButton = () => {
-
-
-    const onPress = () => {
-        console.log('Clicked bookmark button')
-    }
+const BookmarkButton = ({ showModal }) => {
 
     return (
-        <Pressable onPress={() => onPress()}>
-            <Icon size={30} name="bookmark" color={tulipColors.tulipGreen}/>
+        <Pressable onPress={() => showModal()}>
+            <Icon size={30} name="bookmark" color={tulipColors.tulipGreen} />
         </Pressable>
 
     )

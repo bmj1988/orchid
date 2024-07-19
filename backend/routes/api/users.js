@@ -40,7 +40,7 @@ router.get('/', (req, res) => {
             img: user.img,
             access: user.access,
             bio: user.bio,
-            followedBy: user._count.followedBy,
+            followers: user._count.followers,
             following: user._count.following
         };
         return res.json(
@@ -53,14 +53,14 @@ router.get('/friends', async (req, res, next) => {
     try {
         const friends = await prisma.user.findMany({
             where: {
-                followedBy: {
+                followers: {
                     some: {
                         followingId: req.user.id
                     }
                 },
                 following: {
                     some: {
-                        followedById: req.user.id
+                        followerId: req.user.id
                     }
                 }
             },
@@ -83,7 +83,7 @@ router.get('/followers', async (req, res) => {
             where: {
                 following: {
                     some: {
-                        followedById: req.user.id
+                        followerId: req.user.id
                     }
                 }
             }
@@ -102,7 +102,7 @@ router.post('/follow/:id', async (req, res, next) => {
         await prisma.follows.create({
             data: {
                 followingId: followId,
-                followedById: req.user.id
+                followerId: req.user.id
             }
         })
         res.status(201).json({ Success: true })
@@ -146,8 +146,8 @@ router.delete('/unfollow/:id', async (req, res, next) => {
 
         await prisma.follows.delete({
             where: {
-                followingId_followedById: {
-                    followedById: req.user.id,
+                followingId_followerId: {
+                    followerId: req.user.id,
                     followingId: unfollow
                 }
             }
@@ -171,7 +171,7 @@ router.get('/:id', async (req, res, next) => {
                 bio: true,
                 img: true,
                 id: true,
-                followedBy: {
+                followers: {
                     select: {
                         followingId: true,
                     }

@@ -26,7 +26,7 @@ export default function TabTwoScreen() {
         <Image source={{ uri: user.img }} style={styles.image} />
       </View>
       <Text style={styles.profileName}>{`@` + user.username}</Text>
-      <BioBar follows={user.following} followedBy={user.followedBy} bio={user.bio} />
+      <BioBar follows={user.following} followers={user.followers} bio={user.bio} />
       <View style={styles.divider}></View>
       <ScrollView contentContainerStyle={styles.wallScroller}>
         {walls.length > 0 && walls.map((wall) => {

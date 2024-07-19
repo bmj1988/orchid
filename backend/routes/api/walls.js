@@ -27,6 +27,24 @@ router.get('/', requireAuth, async (req, res, next) => {
     }
 })
 
+router.get('/list', requireAuth, async (req, res, next) => {
+    const user = req.user
+    const walls = await prisma.wall.findMany({
+        where: {
+            OR: [{ userId: user.id }, { group: { some: { id: user.id } } }]
+        },
+        select: {
+            name: true,
+            id: true
+        }
+    })
+    try {
+        return res.json(walls)
+    }
+    catch (e) {
+        next(e)
+    }
+})
 // GET DETAILS OF SPECIFIC WALLS
 
 router.get('/:id', requireAuth, async (req, res) => {

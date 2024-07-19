@@ -24,8 +24,8 @@ model User {
   comments       Comment[]
   likes          Like[]
   quotes         Quote[]
-  followedBy     Follows[] @relation("followedBy")
-  following      Follows[] @relation("following")
+  followers      Follows[] @relation("following")
+  following      Follows[] @relation("follower")
   groups         Wall[]    @relation("groups")
 }
 
@@ -77,10 +77,10 @@ model Like {
 }
 
 model Follows {
-  followedBy   User @relation("followedBy", fields: [followedById], references: [id])
-  followedById Int
-  following    User @relation("following", fields: [followingId], references: [id])
-  followingId  Int
+  follower    User @relation("follower", fields: [followerId], references: [id])
+  followerId  Int
+  following   User @relation("following", fields: [followingId], references: [id])
+  followingId Int
 
-  @@id([followingId, followedById])
+  @@id([followingId, followerId])
 }

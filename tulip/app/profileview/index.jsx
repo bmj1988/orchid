@@ -3,7 +3,7 @@ import WallButton from '@/components/WallButton'
 import { useDispatch, useSelector } from 'react-redux';
 import { tulipColors } from '@/constants/Colors';
 import ProfileHeader from '@/components/buttons/ProfileButtons/ProfileHeader/ProfileHeaderOtherUser'
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import BioBar from "@/components/buttons/ProfileButtons/BioBar"
 import { thunkLoadProfile } from '../../store/profile';
 import { useLocalSearchParams } from 'expo-router'
@@ -18,7 +18,7 @@ export default function UserProfile() {
     const viewer = useSelector((state) => state.session.user)
     const walls = user.walls ? user.walls : []
     const currentFollower = () => {
-        if (!user.followedBy || !user.followedBy[viewer.id]) return false
+        if (!user.followers || !user.followers[viewer.id]) return false
         return true
     }
     const current = currentFollower()
@@ -32,7 +32,7 @@ export default function UserProfile() {
                 <Image source={{ uri: user.img }} style={styles.image} />
             </View>
             <Text style={styles.profileName}>{`@` + user.username}</Text>
-            <BioBar follows={user._count && user._count.following ? user._count.following : 0} followedBy={user.followedBy ? Object.values(user.followedBy).length : 0} bio={user.bio} />
+            <BioBar follows={user._count && user._count.following ? user._count.following : 0} followers={user.followers ? Object.values(user.followers).length : 0} bio={user.bio} />
             <View style={styles.divider}></View>
             <ScrollView contentContainerStyle={styles.wallScroller}>
                 {walls.length > 0 && walls.map((wall) => {

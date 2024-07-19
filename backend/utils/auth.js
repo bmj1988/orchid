@@ -51,7 +51,7 @@ const restoreUser = (req, res, next) => {
                 include: {
                     _count: {
                         select: {
-                            followedBy: true,
+                            followers: true,
                             following: true
                         }
                     }

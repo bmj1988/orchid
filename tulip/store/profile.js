@@ -65,7 +65,7 @@ export const thunkFollow = (userId, viewerId) => async (dispatch) => {
 export const thunkUnfollow = (userId, viewerId) => async (dispatch) => {
     try {
         const response = await csrfFetch(`${URL}/api/users/unfollow/${userId}`, {
-            method: "POST",
+            method: "DELETE",
         }
         )
         if (response.ok) {
@@ -80,7 +80,7 @@ export const thunkUnfollow = (userId, viewerId) => async (dispatch) => {
     }
 }
 
-export const followArray = createSelector((state) => state.profile.followedBy, (follows) => {
+export const followArray = createSelector((state) => state.profile.followers, (follows) => {
     return Object.values(follows)
 })
 
@@ -89,18 +89,18 @@ export const profileReducer = (state = {}, action) => {
     switch (action.type) {
         case LOAD: {
             profileState = { ...action.payload }
-            profileState["followedBy"] = {}
-            action.payload.followedBy.forEach((follow) => {
-                profileState["followedBy"][follow.followingId] = follow
+            profileState["followers"] = {}
+            action.payload.followers.forEach((follow) => {
+                profileState["followers"][follow.followingId] = follow
             })
             return profileState
         }
         case FOLLOW: {
-            profileState.followedBy.push(action.payload)
+            profileState.followers[action.payload] = action.payload
             return profileState
         }
         case UNFOLLOW: {
-            profileState.followedBy = profileState.followedBy.filter((el) => el !== action.payload)
+            delete profileState.followers[action.payload]
             return profileState
         }
         default: {
