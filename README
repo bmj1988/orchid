@@ -1,52 +1,31 @@
-steps - [
-    1) register as a company - this will help organize assets and make it so that
-anyone who wants to fund the company can actually do so. it is a minimum step that can be done with relatively little effort, but if you want it done right it does require some research. it also means anyone contributing to the project can actually have a real legal entity to point to when referencing the company. anything above a sole proprietorship will insulate you personally from financial consequences in regards to the company.
 
-    2) create the following accounts:
+dev notes = {
 
-    github (storage for all the code for the project, known as a repository) - your code needs a reliable place to live with common sense features for updating, cloning, and archiving it. unless you want to hire one genius to develop it on his own system that you may or may not have access to, you will need a github.
+repo url => https://github.com/bmj1988/orchid
 
-    a business bank account  - this is pretty self explanatory. it will track all business expenses, tabulate total spending and revenue and save you a ton of headache (as well as money) when figuring out taxes.
+you'll want localtunnel to connect the mobile client to the backend. when it's globally installed the command "lt -p {backend port} -s {subdomain name, I reccomend "tulip"}"
+this will generate a standardized URL that you can include in the env for your frontend.
 
-    hosting service - i recommend AWS because there are far more experienced practitioners of AWS than the majority of cloud services and because it has a varied suite of services that can be used when needed and configured to modulate their own use by necessity, saving you money on service costs. there are other avenues you can pursue and some research here may benefit you. there has to be a machine somewhere constantly "listening" for requests, either a virtual machine or physical computer. a hosting service simply gives you a machine that is always on and responding to your app's users, as well as a database to store all your information. you can hold off on this until you have a product you feel is ready for an alpha launch, but it will be necessary eventually and will require investment. included in this is acquiring a domain name and some form of company email account. you don't want to give out personal emails for professional purposes and gmail/public accounts will likely set off red flags for investors and users. you will need email to process feedback about the app until a formal ticket system is created.
+npm i on frontend (tulip) and backend (backend) and you should be ready for testing. I will leave .env.examples for what your .env should look like.
 
-    3) when you have the budget you will likely want to purchase:
 
-    a) an iphone purely for testing purposes - the iphone side of development can really only be emulated in a few ways, either paying an apple software developer fee or acquiring an actual physical iphone and testing on it. There are pros and cons to each but I lean toward testing on a decently modern but not completely current iphone. this means lending out the iphone to at least one employee (in some sense, risky) but having far less work to do to control access to your developer account.
+after you've created a github, clone the project from the current repo on my account, and I will delete the one I have, so that you have sole ownership of the code (which you will have to make private to keep anyone else from just cloning it)
 
-    i must stress that all the code as its currently tested has been emulated on android, and that an iphone is mostly similar in terms of building with react-native (the mobile framework the app is built on) but has some differences that cannot be tested for unless you are able to emulate an iPhone or use a real one. it will be a crucial next phase of development.
+a good place to start getting familiarity with the codebase would be to write API documentation.
 
-    b) a mac or linux laptop with fairly high specs - you will eventually want a physical place that has all the data related to your project, as well as something to present demonstrations to potential investors on.
+build out the error handling
 
-    c) art assets - AI makes actual graphic artists pretty cheap and you can usually commission a lot of good assets on services like fiverr, but feel free to shop around. there are certain elements (the quote backgrounds, the icons, the logo) that you want to be sticky with people. the "Lovely May Script" font costs about $15 online, I substituted a free Allison font in the meantime. large social media companies invest heavily in making their assets more appealing to their users, and you're now in competition with those companies for market share, you will likely have to spend money making sure your assets look high-quality.
+there are a number of frontend functions that essentially use for loops. this can be solved by either expanding the redux store, or in many cases just normalizing data in the existing slices of state. most pages survive a refresh but you will want either a context or layout to keep the user in store. you are essentially converting a demo model in a production level app so there will be many suboptimal elements to refactor.
 
-    d) some form of marketing
+construct a formal ticket system for feedback
 
-    4) when you want to hire an engineer, he will likely need some direction on the project and so I will be listing all pertinent information from a development perspective that I can think off as well as a step by step guide on how to run the project on their local system.
+concentrate on making the feed feel sticky, to do this you will have to introduce a "type" attribute to quotes and figure out how to accurately ascribe a type.
 
-      a) after you've created a github, clone the project from the current repo on my account, and I will delete the one I have, so that you have sole ownership of the code (which you will have to make private to keep anyone else from just cloning it)
+figure out a system for "sending" quotes. the user doesn't have an inbox, i am more of the mind that a send should send to one of the users walls by choice.
 
-      b) a good place to start getting familiarity with the codebase would be to write API documentation.
+what should searchbar return? quotes in a feed that are related to the query? a
+results page? what is the structure of the return? I lean toward the first.
 
-      b-2) build out the error handling
+as it exists now, if you follow someone you just follow them, there are no requests to approve. this would require an entirely separate screen as well as a model for FollowRequests.
 
-      c) there are a number of frontend functions that essentially use for loops. this can be solved by either expanding the redux store, or in many cases just normalizing data in the existing slices of state. most pages survive a refresh but you will want either a context or layout to keep the user in store. you are essentially converting a demo model in a production level app so there will be many suboptimal elements to refactor.
-
-      d) construct a formal ticket system for feedback
-
-      e) concentrate on making the feed feel sticky, to do this you will have to introduce a "type" attribute to quotes and figure out how to accurately ascribe a type.
-
-      f) figure out a system for "sending" quotes. the user doesn't have an inbox, i am more of the mind that a send should send to one of the users walls by choice.
-
-      g) what should searchbar return? quotes in a feed that are related to the query? a results page? what is the structure of the return? I lean toward the first.
-
-      h) as it exists now, if you follow someone you just follow them, there are no requests to approve. this would require an entirely separate screen as well as a model for FollowRequests.
-
-    5) Launching a full production app will cost serious money, the average engineer will run, at minimum ~$400/day. You may be able to get an inexperienced engineer to work for half that, but if you have one engineer and they are experienced, they will be tasked with about 10 different distinct jobs and they will likely be bad at the majority of them, meaning development will take forever and the product may have poor performance (less users), poorly optimized architecture (more money), cluttered/illegible file structure (harder to fix problems), bad typing, bad documentation or some combination of these and other pitfalls. The market is tough right now, you may come across some experienced candidates willing to work for lower than normal rates if they are allowed certain other perks (flexibie schedule, remote work) which would play into your favor but you will still probably want more than one engineer and want their strengths to compliment each other. There is probably no single engineer who is capable of taking this project to market with reasonable quality on a reasonable timeframe who will work for less than $100k/year.
-
-    I guess this part should have come first, but if you decide to move forward, make sure this is something you're really willing to commit time and resources to. For every bit of time you don't commit, you will have to commit more resources, and vice versa. There is no cheap way to make a production level app that will compete in the current marketplace unless you code it yourselves for free and even then the time investment in research and development would be immense.
-
-    For now you have a model you can show to anyone who is interested, and see if this is an idea you a) love enough to foster, b) consider competitive enough to retain users and c) has a profit model that makes solid financial sense. If Twitter/Reddit/Chrome or any number of giant applications cost $5 per month per user they would never have existed because no one would ever have used them. You will likely have to incorporate an ad model to the platform, which will require even more engineering, which will require more money, which will require more users, which will require more product design, assets, and hosting services... you can see how this gets very, very expensive quickly. If you can secure enough funding I would say 3-5 engineers (frontend, backend, systems) could deliver on this project in a few months.
-
-    i'm happy to answer any questions about the project you or your engineer/s have by email or text. good luck with everything!
-]
+}
