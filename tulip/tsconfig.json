@@ -13,5 +13,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-, "app/index.jsx", "store/index.js", "app/(tabs)/index.jsx", "app/wall/index.jsx", "components/WallForm.jsx", "components/WallButton.jsx", "app/(tabs)/profile.jsx", "app/(tabs)/feed.jsx", "components/FeedQuote.jsx"  ]
+, "app/index.jsx", "store/index.js", "app/(tabs)/index.jsx", "app/wall/index.jsx", "components/WallForm.jsx", "components/WallButton.jsx", "app/(tabs)/index.jsx", "app/(tabs)/feed.jsx", "components/FeedQuote.jsx"  ]
 }

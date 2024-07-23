@@ -1,8 +1,11 @@
 import { StatusBar, StyleSheet, View } from "react-native"
 import MenuItem from "../MenuItem"
 import { tulipColors } from "@/constants/Colors"
+import { router } from "expo-router"
+
 
 const ProfileMenu = ({ setVisible, editProfile }) => {
+
     return (
         <View style={styles.container}>
             <MenuItem text={'Edit Profile'} onPress={() => {
@@ -11,6 +14,7 @@ const ProfileMenu = ({ setVisible, editProfile }) => {
             }}
                 position={'top'} />
             <MenuItem text={'Delete Account'} onPress={() => console.log('click delete')} position={'center'} />
+            <MenuItem text={'Support'} onPress={() => router.push('support')} position={'center'} />
             <MenuItem text={'Close Menu'} onPress={() => setVisible()} position={'bottom'} />
         </View>
     )

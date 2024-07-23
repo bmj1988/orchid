@@ -29,11 +29,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: "center",
         elevation: 5,
+        borderRadius: 12,
     },
     button: {
         backgroundColor: "inherit",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     text: {
         color: tulipColors.tulipWhite,

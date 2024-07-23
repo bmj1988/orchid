@@ -21,25 +21,16 @@ export default function TabLayout() {
         }
       }}>
       <Tabs.Screen
-        name="index"
+        name="feed"
         options={{
-          title: 'Walls',
+          title: 'Feed',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'grid' : 'grid-outline'} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="feed"
-        options={{
-          title: 'Feed',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
+        name="index"
         options={{
           title: 'Profile',
           tabBarIcon: ({ color, focused }) => (

@@ -4,7 +4,7 @@ const prisma = require('./prisma')
 const router = express.Router()
 
 router.post('/:quoteId', requireAuth, async (req, res) => {
-    const quoteId = Number(req.params.id)
+    const quoteId = Number(req.params.quoteId)
     const userId = req.user.id
     try {
         await prisma.like.create({
@@ -22,8 +22,8 @@ router.post('/:quoteId', requireAuth, async (req, res) => {
     }
 })
 
-router.delete('/:quotedId', requireAuth, async (req, res) => {
-    const quoteId = Number(req.params.id)
+router.delete('/:quoteId', requireAuth, async (req, res) => {
+    const quoteId = Number(req.params.quoteId)
     const userId = req.user.id
     try {
         await prisma.like.delete({

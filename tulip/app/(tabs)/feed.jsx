@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: StatusBar.currentHeight,
-        paddingBottom: 50,
         backgroundColor: tulipColors.tulipWhite
     }
 })

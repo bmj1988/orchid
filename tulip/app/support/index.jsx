@@ -1,5 +1,6 @@
-import { Button, SafeAreaView, StatusBar, StyleSheet, TextInput } from "react-native"
+import { Button, SafeAreaView, StatusBar, StyleSheet, TextInput, View, Image, Text } from "react-native"
 import { tulipColors } from "@/constants/Colors";
+import { useState } from "react";
 
 
 
@@ -15,13 +16,14 @@ const SupportPage = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View>
+            <View style={styles.view}>
                 <Image style={styles.img} source={{ uri: 'https://i.gyazo.com/7be89f6a141b3e4f37b2c9608ca0fcb9.png' }} />
                 <Text style={styles.text}>
                     {"Tulip values the experience of its users. If you need support with any aspect of our platform, feel free to leave us a message below."}
                 </Text>
                 {!submitted && <View style={styles.view}>
                     <TextInput
+                        style={styles.textInput}
                         numberOfLines={4}
                         onChangeText={text => setMessage(text)}
                         value={message}
@@ -43,14 +45,19 @@ const styles = StyleSheet.create({
         display: "flex",
         flex: 1,
         paddingTop: StatusBar.currentHeight,
+        backgroundColor: tulipColors.tulipWhite
 
     },
     view: {
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        gap: 10,
+        marginTop: 100
     },
     text: {
-        color: tulipColors.tulipBlack
+        color: tulipColors.tulipBlack,
+        textAlign: "center",
+        padding: 10
     },
     button: {
         width: 200,
@@ -58,7 +65,16 @@ const styles = StyleSheet.create({
         borderRadius: 8
     },
     img: {
-        height: 100
+        height: 150,
+        width: 60
+    },
+    textInput: {
+        backgroundColor: "#EEEEEE",
+        width: 200,
+        borderColor: tulipColors.tulipBlack,
+        borderStyle: "solid",
+        borderWidth: 1,
+        borderRadius: 5
     }
 })
 

@@ -1,68 +1,84 @@
-import { StyleSheet, Text, ScrollView, View } from 'react-native';
-import WallForm from '@/components/WallForm';
-import { StatusBar } from 'react-native';
+import { StyleSheet, Image, View, StatusBar, Text, ScrollView, } from 'react-native';
+import WallButton from '@/components/WallButton'
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { getUserWalls, wallsArray } from '../../store/wall'
+import { getUserWalls, wallsArray } from '@/store/wall';
 import { tulipColors } from '@/constants/Colors';
+import ProfileHeader from '@/components/buttons/ProfileButtons/ProfileHeader'
+import { useEffect, useState } from 'react';
+import ProfileMenu from '@/components/buttons/ProfileButtons/ProfileMenu'
 import { BasicRoundButton } from '@/components/buttons/BasicRoundButton';
+import AddWallModal from '@/components/modals/AddWallModal'
+import EditProfileModal from '@/components/modals/EditProfileModal'
+import BioBar from "@/components/buttons/ProfileButtons/BioBar"
 
-export default function WallScreen() {
-  const dispatch = useDispatch()
+export default function TabTwoScreen() {
+  const dispatch = useDispatch();
+  const walls = useSelector(wallsArray)
+  const user = useSelector((state) => state.session.user)
+  const [menuVisible, setMenuVisible] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
+  const [editProfile, setEditProfile] = useState(false)
+
   useEffect(() => {
     dispatch(getUserWalls())
   }, [])
-  const walls = useSelector(wallsArray)
-
-  const newWall = () => {
-    console.log('new wall')
-  }
 
   return (
     <View style={styles.titleContainer}>
-      <Text style={styles.logo}>{'GALLERY'}</Text>
-      <ScrollView contentContainerStyle={styles.wallContainer}>
+      <ProfileHeader showMenu={() => setMenuVisible(!menuVisible)} />
+      {menuVisible && <ProfileMenu setVisible={() => setMenuVisible()} editProfile={() => setEditProfile(true)} />}
+      <View style={styles.imageContainer}>
+        <Image source={{ uri: user.img }} style={styles.image} />
+      </View>
+      <Text style={styles.profileName}>{`@` + user.username}</Text>
+      <BioBar follows={user.following} followers={user.followers} bio={user.bio} />
+      <View style={styles.divider}></View>
+      <ScrollView contentContainerStyle={styles.wallScroller}>
         {walls.length > 0 && walls.map((wall) => {
           return (
-            <WallForm color={tulipColors.orchidLavender} wall={wall} key={wall.id} />
+            <WallButton wall={wall} key={wall.id} />
           )
         })}
       </ScrollView>
-      <BasicRoundButton onPress={() => newWall()} icon={'add'} />
+      <BasicRoundButton onPress={() => setModalVisible(true)} icon={'add'} />
+      <AddWallModal isVisible={modalVisible} onClose={() => setModalVisible(false)} />
+      <EditProfileModal isVisible={editProfile} onClose={() => setEditProfile(false)} userBio={user.bio} userAccess={user.access} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   titleContainer: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
     flex: 1,
-    overflow: "scroll",
-    backgroundColor: tulipColors.orchidEggshell,
-    marginTop: StatusBar.currentHeight,
-    marginBottom: 35,
+    paddingTop: StatusBar.currentHeight,
+    backgroundColor: tulipColors.tulipWhite,
+    paddingBottom: 35,
+    alignItems: 'center',
   },
-  wallContainer: {
-    gap: 8,
-    marginBottom: 8,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    width: 350,
+  imageContainer: {
+    justifyContent: 'center'
   },
-  logo: {
-    color: 'black',
-    fontSize: 60,
-    marginBottom: 80,
-    fontFamily: 'PlayfairDisplay'
+  profileName: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'gray',
   },
-  icon: {
-    fontSize: 100,
+  image: {
+    height: 150,
+    width: 150,
+    borderRadius: 70
   },
-  iconText: {
-    position: 'absolute',
-    top: 15
+  divider: {
+    height: 1,
+    width: "100%",
+    backgroundColor: "lightgray",
+    margin: 20
+  },
+  wallScroller: {
+    width: "100%",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 10
   }
+
 });
